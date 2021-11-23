@@ -31,7 +31,7 @@ table > tbody {
     prototype: VTable;
 
     size: *;
-    overflow-y: auto; // scroll-indicator;
+    overflow-y: auto; //scroll-indicator;
 }
 
 table > thead {
@@ -96,7 +96,7 @@ class VTable extends Element
 
     /**
      * Render item
-     * @param int index
+     * @param int item index
      */
     renderItem(index)
     {
@@ -111,6 +111,29 @@ class VTable extends Element
         );
 
         return row;
+    }
+
+    /**
+     * Content required
+     * @param Event
+     * @return
+     */
+    oncontentrequired(event)
+    {
+        let {length, start, where} = event.data;
+
+        if (where > 0)
+            // scrolling down, need to append more elements
+            event.data = this.appendElements(start, length);
+        else
+        if (where < 0)
+            // scrolling up, need to prepend more elements
+            event.data = this.prependElements(start, length);
+        else
+            // scrolling to index
+            event.data = this.replaceElements(start, length);
+
+        return true;
     }
 
     /// scroll down
@@ -132,14 +155,15 @@ class VTable extends Element
 
         // return estimated number of items below this chunk
         return {
-            moreafter: (this.nItems - index)
+            moreafter: this.nItems - index
         };
     }
 
     /// scroll up
     prependElements(index, n)
     {
-        if (index === undefined) index = this.nItems - 1;
+        if (index === undefined)
+            index = this.nItems - 1;
 
         let elements = [];
 
@@ -156,7 +180,7 @@ class VTable extends Element
 
         // return estimated number of items above this chunk
         return {
-            morebefore: (index < 0 ? 0 : index + 1)
+            morebefore: index < 0 ? 0 : index + 1
         };
     }
 
@@ -177,26 +201,9 @@ class VTable extends Element
 
         // return estimated number of items before and above this chunk
         return {
-            morebefore: (start <= 0 ? 0 : start),
-            moreafter:  (this.nItems - index)
+            morebefore: start <= 0 ? 0 : start,
+            moreafter: this.nItems - index
         };
-    }
-
-    oncontentrequired(event)
-    {
-        let {length, start, where} = event.data;
-
-        if (where > 0)
-            // scrolling down, need to append more elements
-            event.data = this.appendElements(start, length);
-        else if (where < 0)
-            // scrolling up, need to prepend more elements
-            event.data = this.prependElements(start, length);
-        else
-            // scrolling to index
-            event.data = this.replaceElements(start, length);
-
-        return true;
     }
 }
 
