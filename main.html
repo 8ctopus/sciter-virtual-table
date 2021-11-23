@@ -124,27 +124,33 @@ class VTable extends Element
 
         if (where > 0)
             // scrolling down, need to append more elements
-            event.data = this.appendElements(start, length);
+            event.data = this.appendRows(start, length);
         else
         if (where < 0)
             // scrolling up, need to prepend more elements
-            event.data = this.prependElements(start, length);
+            event.data = this.prependRows(start, length);
         else
             // scrolling to index
-            event.data = this.replaceElements(start, length);
+            event.data = this.replaceRows(start, length);
 
         return true;
     }
 
-    /// scroll down
-    appendElements(index, n)
+    /**
+     * Append rows (scroll down)
+     * @param int index
+     * @param int length
+     * @return object
+     */
+    appendRows(index, length)
     {
         if (index === undefined)
             index = 0;
 
+        // create rows
         let elements = [];
 
-        for (let i = 0; i < n; ++i, ++index) {
+        for (let i = 0; i < length; ++i, ++index) {
             if (index >= this.items)
                 break;
 
@@ -153,21 +159,27 @@ class VTable extends Element
 
         this.append(elements);
 
-        // return estimated number of items below this chunk
+        // return estimated number of items below
         return {
             moreafter: this.nItems - index
         };
     }
 
-    /// scroll up
-    prependElements(index, n)
+    /**
+     * Prepend rows (scroll up)
+     * @param int index
+     * @param int length
+     * @return object
+     */
+    prependRows(index, length)
     {
         if (index === undefined)
             index = this.nItems - 1;
 
+        // create rows
         let elements = [];
 
-        for (let i = 0; i < n; ++i, --index) {
+        for (let i = 0; i < length; ++i, --index) {
             if (index < 0)
                 break;
 
@@ -178,19 +190,24 @@ class VTable extends Element
 
         this.prepend(elements);
 
-        // return estimated number of items above this chunk
+        // return estimated number of items above
         return {
             morebefore: index < 0 ? 0 : index + 1
         };
     }
 
-    /// scroll to
-    replaceElements(index, n)
+    /**
+     * Replace rows (scroll to index)
+     * @param int index
+     * @param int length
+     * @return object
+     */
+    replaceRows(index, length)
     {
         let elements = [];
         let start = index;
 
-        for (let i = 0; i < n; ++i, ++index) {
+        for (let i = 0; i < length; ++i, ++index) {
             if (index >= this.nItems)
                 break;
 
