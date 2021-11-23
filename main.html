@@ -28,7 +28,7 @@ table {
 
 tbody {
     behavior: virtual-list;
-    prototype: Tape;
+    prototype: VTable;
 
     size: *;
     overflow: scroll-indicator;
@@ -90,7 +90,7 @@ const ages = [
     37
 ];
 
-class Tape extends Element
+class VTable extends Element
 {
     nItems = 200;
 
