@@ -26,7 +26,7 @@ table {
     padding: 0;
 }
 
-tbody {
+table > tbody {
     behavior: virtual-list;
     prototype: VTable;
 
@@ -92,7 +92,7 @@ const ages = [
 
 class VTable extends Element
 {
-    nItems = 200;
+    items = 200;
 
     /**
      * Render item
@@ -122,7 +122,7 @@ class VTable extends Element
         let elements = [];
 
         for (let i = 0; i < n; ++i, ++index) {
-            if (index >= this.nItems)
+            if (index >= this.items)
                 break;
 
             elements.push(this.renderItem(index));
