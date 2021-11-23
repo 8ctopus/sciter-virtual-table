@@ -94,24 +94,7 @@ class VTable extends Element
 {
     items = 200;
 
-    /**
-     * Render item
-     * @param int item index
-     */
-    renderItem(index)
-    {
-        let current = index % 2;
-
-        const row = (
-            <tr key={index} state-current={current} state-checked={!current}>
-                <td>{index}</td>
-                <td>{ names[index % names.length] }</td>
-                <td>{ ages[index % ages.length] }</td>
-            </tr>
-        );
-
-        return row;
-    }
+    selected;
 
     /**
      * Content required
@@ -137,6 +120,23 @@ class VTable extends Element
     }
 
     /**
+     * Render row
+     * @param int row index
+     */
+    renderRow(index)
+    {
+        const row = (
+            <tr key={index} state-current={this.selected === index}>
+                <td>{index}</td>
+                <td>{ names[index % names.length] }</td>
+                <td>{ ages[index % ages.length] }</td>
+            </tr>
+        );
+
+        return row;
+    }
+
+    /**
      * Append rows (scroll down)
      * @param int index
      * @param int length
@@ -154,7 +154,7 @@ class VTable extends Element
             if (index >= this.items)
                 break;
 
-            elements.push(this.renderItem(index));
+            elements.push(this.renderRow(index));
         }
 
         this.append(elements);
@@ -183,7 +183,7 @@ class VTable extends Element
             if (index < 0)
                 break;
 
-            elements.push(this.renderItem(index));
+            elements.push(this.renderRow(index));
         }
 
         elements.reverse();
@@ -211,7 +211,7 @@ class VTable extends Element
             if (index >= this.items)
                 break;
 
-            elements.push(this.renderItem(index));
+            elements.push(this.renderRow(index));
         }
 
         this.patch(elements);
@@ -221,6 +221,20 @@ class VTable extends Element
             morebefore: start <= 0 ? 0 : start,
             moreafter: this.items - index
         };
+    }
+
+    /**
+     * On row click
+     * @param Event event
+     * @param Element row
+     */
+    ["on click at tr"](event, row)
+    {
+        // get row index in table
+        this.selected = row.elementIndex;
+
+        // change row state
+        row.state.current = true;
     }
 }
 
