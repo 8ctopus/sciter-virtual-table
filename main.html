@@ -1,0 +1,251 @@
+<html
+    window-resizable="true"
+    window-width="600dip"
+    window-height="400dip"
+>
+<head>
+<title>sciter virtual table demo</title>
+<style>
+
+@import url(vendor/8ctopus/sciter-logger/src/logger.css);
+
+body {
+    border-spacing: 1em;
+}
+
+plaintext#logger {
+    size: *;
+}
+
+table {
+    size: *;
+    border: 1px solid #ccc;
+}
+
+tbody {
+    behavior: virtual-list;
+    prototype: Tape;
+
+    size: *;
+    overflow: scroll-indicator;
+}
+
+table > thead {
+    behavior: column-resizer;
+    border-bottom: 1px solid #ccc;
+}
+
+table > thead > tr > th:nth-child(1),
+table > thead > tr > th:nth-child(2) {
+    width: 8em;
+}
+
+table > thead > tr > th:nth-child(3) {
+    width: *;
+}
+
+table > tbody > tr > td {
+    white-space: nowrap;
+}
+
+table > tbody > tr > td:nth-child(3) {
+    width: *;
+    overflow-x: hidden;
+}
+
+</style>
+<script>
+
+const names = [
+    "Antony",
+    "David",
+    "Julien",
+    "Laurent",
+    "Marc",
+    "Olivier",
+    "Patrick",
+    "Vincent",
+];
+
+const ages = [
+    45,
+    18,
+    34,
+    20,
+    27,
+    29,
+    30,
+    37
+];
+
+class Tape extends Element
+{
+    nItems = 200;
+
+    /**
+     * Render item
+     * @param int index
+     */
+    renderItem(index)
+    {
+        const row = (
+            <tr key={index}>
+                <td>{index}</td>
+                <td>{ names[index % names.length] }</td>
+                <td>{ ages[index % ages.length] }</td>
+            </tr>
+        );
+
+        return row;
+    }
+
+    /// scroll down
+    appendElements(index, n)
+    {
+        if (index === undefined)
+            index = 0;
+
+        let elements = [];
+
+        for (let i = 0; i < n; ++i, ++index) {
+            if (index >= this.nItems)
+                break;
+
+            elements.push(this.renderItem(index));
+        }
+
+        this.append(elements);
+
+        // return estimated number of items below this chunk
+        return {
+            moreafter: (this.nItems - index)
+        };
+    }
+
+    /// scroll up
+    prependElements(index, n)
+    {
+        if (index === undefined) index = this.nItems - 1;
+
+        let elements = [];
+
+        for (let i = 0; i < n; ++i, --index) {
+            if (index < 0)
+                break;
+
+            elements.push(this.renderItem(index));
+        }
+
+        elements.reverse();
+
+        this.prepend(elements);
+
+        // return estimated number of items above this chunk
+        return {
+            morebefore: (index < 0 ? 0 : index + 1)
+        };
+    }
+
+    /// scroll to
+    replaceElements(index, n)
+    {
+        let elements = [];
+        let start = index;
+
+        for (let i = 0; i < n; ++i, ++index) {
+            if (index >= this.nItems)
+                break;
+
+            elements.push(this.renderItem(index));
+        }
+
+        this.patch(elements);
+
+        // return estimated number of items before and above this chunk
+        return {
+            morebefore: (start <= 0 ? 0 : start),
+            moreafter:  (this.nItems - index)
+        };
+    }
+
+    oncontentrequired(event)
+    {
+        let {length, start, where} = event.data;
+
+        if (where > 0)
+            // scrolling down, need to append more elements
+            event.data = this.appendElements(start, length);
+        else if (where < 0)
+            // scrolling up, need to prepend more elements
+            event.data = this.prependElements(start, length);
+        else
+            // scrolling to index
+            event.data = this.replaceElements(start, length);
+
+        return true;
+    }
+}
+
+</script>
+<script type="module">
+
+import {logger} from "vendor/8ctopus/sciter-logger/src/logger.js";
+import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
+
+// initialize logger
+logger.init();
+
+// attach logger to console
+logger.attach();
+
+// capture unhandled exceptions
+logger.capture(unhandledExceptionHandler);
+
+document.ready = function() {
+    // subscribe to logger messages
+    logger.plaintext(document.$("plaintext#logger"));
+
+    // log sciter version
+    console.debug(utils.sciterInfo());
+
+    // add support for F5 reload
+    utils.addReloadWindow();
+
+    // close window on escape key press
+    utils.closeWindowOnEscape(Window.this);
+
+    // center window on screen
+    utils.centerWindow(Window.this, "screen");
+
+    // bring window to front
+    //utils.windowToFront(Window.this);
+
+    // bring window to front and set input focus
+    Window.this.activate(true);
+}
+
+/**
+ * Unhandled exception handler
+ * @param  Error|String e
+ * @return void
+ */
+function unhandledExceptionHandler(e)
+{
+    // log exception using exception if it exists, error otherwise
+    typeof console.exception === "function" ? console.exception(e) : console.error(e);
+}
+
+</script>
+</head>
+<body>
+    <table fixedlayout>
+        <thead>
+            <th>index</th>
+            <th>name</th>
+            <th>age</th>
+        </thead>
+        <tbody />
+    </table>
+    <plaintext #logger readonly />
+</body>
+</html>
