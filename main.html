@@ -161,7 +161,7 @@ class VTable extends Element
 
         // return estimated number of items below
         return {
-            moreafter: this.nItems - index
+            moreafter: this.items - index
         };
     }
 
@@ -174,7 +174,7 @@ class VTable extends Element
     prependRows(index, length)
     {
         if (index === undefined)
-            index = this.nItems - 1;
+            index = this.items - 1;
 
         // create rows
         let elements = [];
@@ -208,7 +208,7 @@ class VTable extends Element
         let start = index;
 
         for (let i = 0; i < length; ++i, ++index) {
-            if (index >= this.nItems)
+            if (index >= this.items)
                 break;
 
             elements.push(this.renderItem(index));
@@ -219,7 +219,7 @@ class VTable extends Element
         // return estimated number of items before and above this chunk
         return {
             morebefore: start <= 0 ? 0 : start,
-            moreafter: this.nItems - index
+            moreafter: this.items - index
         };
     }
 }
