@@ -48,6 +48,14 @@ table > thead > tr > th:nth-child(3) {
     width: *;
 }
 
+table > tbody > tr:current {
+    background-color: rgba(0,0,0,0.3);
+}
+
+table > tbody > tr:checked {
+    background-color: blue;
+}
+
 table > tbody > tr > td {
     white-space: nowrap;
 }
@@ -92,8 +100,10 @@ class Tape extends Element
      */
     renderItem(index)
     {
+        let current = index % 2;
+
         const row = (
-            <tr key={index}>
+            <tr key={index} state-current={current} state-checked={!current}>
                 <td>{index}</td>
                 <td>{ names[index % names.length] }</td>
                 <td>{ ages[index % ages.length] }</td>
