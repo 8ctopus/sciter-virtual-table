@@ -6,6 +6,13 @@ This project is derivated from the [virtual table example](https://github.com/c-
 
 ![sciter virtual table screenshot](screenshot.png)
 
+## how it actually works
+
+Virtual lists are virtual because they add only part of the data to the html DOM in order to make the app faster.
+In the screenshot below, the yellow rows 6 to 22 are added to the DOM, the blue rows are visible in the interface and the gray rows at both ends are neither added to the DOM nor visible.
+
+![virtual-list screenshot](virtual-list.png)
+
 ## demo
 
 - git clone the repository
@@ -33,7 +40,3 @@ index of first element that is in memory
 - `lastBufferIndex: int`
 
 index of last element that is in memory
-
-## how it actually works inside
-
-![virtual-list screenshot](virtual-list.png)
