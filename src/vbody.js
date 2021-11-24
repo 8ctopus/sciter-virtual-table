@@ -135,26 +135,28 @@ export class VBody extends Element
      * On row click
      * @param Event event
      * @param Element row
+     * @return bool true if no further event propagation
      */
     ["on click at tr"](event, row)
     {
         // get row index in table
         this.selected = row.elementIndex;
 
-        console.debug(this.selected, this.vlist.firstBufferIndex);
+        console.debug("selected", this.selected);
 
         // change row state
         row.state.current = true;
 
+        // event handled, no further propagation
         return true;
     }
 
     /**
      * On keydown
      * @param Event
-     * @param Element
+     * @return bool true if no further event propagation
      */
-    onkeydown(event, element)
+    onkeydown(event)
     {
         switch (event.code) {
             case "KeyUP":
@@ -180,8 +182,9 @@ export class VBody extends Element
                 break;
         }
 
-        console.debug(this.selected, this.vlist.firstBufferIndex);
+        console.debug("selected", this.selected);
 
+        // event handled, no further propagation
         return true;
     }
 }
