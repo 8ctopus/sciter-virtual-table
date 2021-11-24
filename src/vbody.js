@@ -24,11 +24,11 @@ export class VBody extends Element
 
     /**
      * Update component
-     * @param array data
+     * @param object data
      */
     componentUpdate(data)
     {
-        this.data  = data;
+        this.data  = data.data;
         this.items = this.data.length;
 
         //this.render();
