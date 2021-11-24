@@ -1,0 +1,27 @@
+table > tbody {
+    style-set: vtable;
+}
+
+@set vtable {
+    :root {
+        behavior: virtual-list;
+        prototype: VTable url(vtable.js);
+
+        size: *;
+
+        overflow-y: auto; //scroll-indicator;
+    }
+
+    :root > tr:current {
+        background-color: rgba(0,0,0,0.3);
+    }
+
+    :root > tr > td {
+        white-space: nowrap;
+    }
+
+    :root > tr > td:nth-child(3) {
+        width: *;
+        overflow-x: hidden;
+    }
+}
