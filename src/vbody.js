@@ -1,6 +1,7 @@
 export class VBody extends Element
 {
-    items;
+    data  = null;
+    items = 0;
     selected;
 
     /**
@@ -17,8 +18,19 @@ export class VBody extends Element
      */
     componentDidMount()
     {
-        this.items = this.attributes.items ?? 1000;
-        console.debug(`virtual table contains ${this.items} items`);
+        //this.items = this.attributes.items ?? 1000;
+        //console.debug(`virtual table contains ${this.items} items`);
+    }
+
+    /**
+     * Set virtual table data
+     */
+    setData(data)
+    {
+        this.data = data;
+        this.items = this.data.length;
+
+        //this.render();
     }
 
     /**
@@ -50,13 +62,11 @@ export class VBody extends Element
      */
     renderRow(index)
     {
-        let data = getData(index);
-
         const row = (
             <tr index={index} state-current={this.selected === index}>
                 <td>{index}</td>
-                <td>{ data[0] }</td>
-                <td>{ data[1] }</td>
+                <td>{ this.data[index][0] }</td>
+                <td>{ this.data[index][1] }</td>
             </tr>
         );
 

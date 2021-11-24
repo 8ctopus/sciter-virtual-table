@@ -86,6 +86,9 @@ document.ready = function() {
 
     // bring window to front and set input focus
     Window.this.activate(true);
+
+    // populate table
+    document.$("tbody").setData(createTableData(50));
 }
 
 /**
@@ -99,9 +102,14 @@ function unhandledExceptionHandler(e)
     typeof console.exception === "function" ? console.exception(e) : console.error(e);
 }
 
-function getData(index)
+/**
+ * Create table data
+ * @param  int count
+ * @return array
+ */
+function createTableData(count)
 {
-    let names = [
+    const names = [
         "Antony",
         "David",
         "Julien",
@@ -112,7 +120,7 @@ function getData(index)
         "Vincent",
     ];
 
-    let ages = [
+    const ages = [
         45,
         18,
         34,
@@ -123,13 +131,17 @@ function getData(index)
         37
     ];
 
-    return [
-        names[index % names.length],
-        ages[index % ages.length],
-    ];
-}
+    let data = [];
 
-globalThis.getData = getData;
+    for (let i = 0; i < count; ++i) {
+        data.push([
+            names[i % names.length],
+            ages[i % ages.length],
+        ]);
+    }
+
+    return data;
+}
 
 document.on("click", "button", function(event, element) {
     let vbody = document.$("tbody");
@@ -188,7 +200,7 @@ document.on("click", "button", function(event, element) {
             <th>name</th>
             <th>age</th>
         </thead>
-        <tbody styleset="#vbody" items=50 />
+        <tbody styleset="#vbody" />
     </table>
     <plaintext #logger readonly />
 </body>
