@@ -155,14 +155,14 @@ export class VBody extends Element
     }
 
     /**
-     * On keydown
+     * On key down
      * @param Event
      * @return bool true if no further event propagation
      */
     onkeydown(event)
     {
         console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
-        console.debug("first visible item", this.vlist.firstVisibleItem.attribute.index, "last visible item", this.vlist.lastVisibleItem.attribute.index);
+        console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
 
         switch (event.code) {
             case "KeyUP":
