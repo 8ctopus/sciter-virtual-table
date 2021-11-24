@@ -23,11 +23,12 @@ export class VBody extends Element
     }
 
     /**
-     * Set virtual table data
+     * Update component
+     * @param array data
      */
-    setData(data)
+    componentUpdate(data)
     {
-        this.data = data;
+        this.data  = data;
         this.items = this.data.length;
 
         //this.render();

@@ -94,7 +94,7 @@ document.ready = function() {
     let data = createTableData(50);
 
     // send data to table
-    document.$("tbody").setData(data);
+    document.$("tbody").componentUpdate(data);
 }
 
 /**
