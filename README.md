@@ -2,6 +2,8 @@
 
 Exploring [sciter.js](https://sciter.com/) virtual tables.
 
+The project is derivated from the [virtual table example](https://github.com/c-smile/sciter-js-sdk/blob/main/samples.sciter/virtual-list/test-table.htm).
+
 ## demo
 
 - git clone the repository
