@@ -139,6 +139,9 @@ export class VBody extends Element
      */
     ["on click at tr"](event, row)
     {
+        console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
+        console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+
         // get row index in table
         this.selected = row.elementIndex;
 
@@ -158,6 +161,9 @@ export class VBody extends Element
      */
     onkeydown(event)
     {
+        console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
+        console.debug("first visible item", this.vlist.firstVisibleItem.attribute.index, "last visible item", this.vlist.lastVisibleItem.attribute.index);
+
         switch (event.code) {
             case "KeyUP":
                 if (this.selected > 0)
@@ -183,6 +189,9 @@ export class VBody extends Element
         }
 
         console.debug("selected", this.selected);
+
+        // navigate to selected item
+        //this.vlist.navigate(this.selected);
 
         // event handled, no further propagation
         return true;
