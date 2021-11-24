@@ -177,9 +177,12 @@ export class VBody extends Element
                 this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
 
                 // scroll window if needed
-                if (this.selected > 0 && this.selected == this.vlist.firstVisibleItem.attributes.index) {
-                    console.debug("navigate to", this.selected - 1)
-                    this.vlist.navigate(this.selected - 1);
+                const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
+
+                if (this.selected > 0 && this.selected === firstVisibleIndex) {
+                    console.debug("navigate to", firstVisibleIndex -1);
+                    this.vlist.navigate(firstVisibleIndex -1);
+
                     console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
                     console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
                 }
@@ -191,10 +194,22 @@ export class VBody extends Element
                     ++this.selected;
 
                 // unselect row
-                this.children[this.selected - 1].state.current = false;
+                this.children[this.selected - this.vlist.firstBufferIndex - 1].state.current = false;
 
                 // select row
-                this.children[this.selected].state.current = true;
+                this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
+
+                // scroll window if needed
+                if (this.selected < this.items -1 && this.selected == this.vlist.lastVisibleItem.attributes.index) {
+                    const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
+
+                    console.debug("navigate to", firstVisibleIndex + 1);
+                    this.vlist.navigate(firstVisibleIndex +1);
+
+                    console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
+                    console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+                }
+
                 break;
         }
 
