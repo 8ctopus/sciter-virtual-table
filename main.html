@@ -26,14 +26,6 @@ table {
     padding: 0;
 }
 
-table > tbody {
-    behavior: virtual-list;
-    prototype: VTable url("src/vtable.js");
-
-    size: *;
-    overflow-y: auto; //scroll-indicator;
-}
-
 table > thead {
     behavior: column-resizer;
     border-bottom: 1px solid #ccc;
@@ -48,21 +40,28 @@ table > thead > tr > th:nth-child(3) {
     width: *;
 }
 
-table > tbody > tr:current {
-    background-color: rgba(0,0,0,0.3);
+table > tbody {
+    behavior: virtual-list;
+    prototype: VTable url("src/vtable.js");
+    style-set: vtable;
+
+    size: *;
+    overflow-y: auto; //scroll-indicator;
 }
 
-table > tbody > tr:checked {
-    background-color: blue;
-}
+@set vtable {
+    :root > tr:current {
+        background-color: rgba(0,0,0,0.3);
+    }
 
-table > tbody > tr > td {
-    white-space: nowrap;
-}
+    :root > tr > td {
+        white-space: nowrap;
+    }
 
-table > tbody > tr > td:nth-child(3) {
-    width: *;
-    overflow-x: hidden;
+    :root > tr > td:nth-child(3) {
+        width: *;
+        overflow-x: hidden;
+    }
 }
 
 </style>
