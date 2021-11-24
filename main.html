@@ -28,7 +28,15 @@ table {
 
 table > thead {
     behavior: column-resizer;
+
     border-bottom: 1px solid #ccc;
+}
+
+table > thead > tr > th {
+    border-right: 1px solid #ccc;
+    //border-bottom: 1px solid #ccc;
+
+    padding: 0 0.3em;
 }
 
 table > thead > tr > th:nth-child(1),
@@ -38,6 +46,10 @@ table > thead > tr > th:nth-child(2) {
 
 table > thead > tr > th:nth-child(3) {
     width: *;
+}
+
+table > thead > tr > th:last-child {
+    border-right: none;
 }
 
 @import url(src/vtable.css);
