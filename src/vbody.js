@@ -1,6 +1,6 @@
 export class VBody extends Element
 {
-    items = 50;
+    items = 1000;
 
     selected;
 
@@ -52,6 +52,8 @@ export class VBody extends Element
      */
     appendRows(index, length)
     {
+        console.debug(`appendRows(${index}, ${length})`);
+
         if (index === undefined)
             index = 0;
 
@@ -81,6 +83,8 @@ export class VBody extends Element
      */
     prependRows(index, length)
     {
+        console.debug(`prependRows(${index}, ${length})`);
+
         if (index === undefined)
             index = this.items - 1;
 
@@ -112,6 +116,8 @@ export class VBody extends Element
      */
     replaceRows(index, length)
     {
+        console.debug(`replaceRows(${index}, ${length})`);
+
         let elements = [];
         let start = index;
 
@@ -139,8 +145,7 @@ export class VBody extends Element
      */
     ["on click at tr"](event, row)
     {
-        console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
-        console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+        this.debug();
 
         // get row index in table
         this.selected = row.elementIndex;
@@ -162,8 +167,7 @@ export class VBody extends Element
     onkeydown(event)
     {
         console.line();
-        console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
-        console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+        this.debug();
 
         switch (event.code) {
             case "KeyUP":
@@ -183,8 +187,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex -1);
                     this.vlist.navigate(firstVisibleIndex -1);
 
-                    console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
-                    console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+                    this.debug();
                 }
 
                 break;
@@ -206,8 +209,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex + 1);
                     this.vlist.navigate(firstVisibleIndex +1);
 
-                    console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
-                    console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+                    this.debug();
                 }
 
                 break;
@@ -221,5 +223,15 @@ export class VBody extends Element
 
         // event handled, no further propagation
         return true;
+    }
+
+    /**
+     * Debug list
+     * @return void
+     */
+    debug()
+    {
+        console.debug(`buffered [${this.vlist.firstBufferIndex}-${this.vlist.lastBufferIndex}]`);
+        console.debug(`visible  [${this.vlist.firstVisibleItem.attributes.index}-${this.vlist.lastVisibleItem.attributes.index}]`);
     }
 }
