@@ -161,17 +161,21 @@ export class VBody extends Element
                 if (this.selected > 0)
                     --this.selected;
 
-                // change row state
-                this.children[this.selected].state.current = true;
+                // unselect row
                 this.children[this.selected + 1].state.current = false;
+
+                // select row
+                this.children[this.selected].state.current = true;
                 break;
 
             case "KeyDOWN":
                 if (this.selected < this.items -1)
                     ++this.selected;
 
-                // change row state
+                // unselect row
                 this.children[this.selected - 1].state.current = false;
+
+                // select row
                 this.children[this.selected].state.current = true;
                 break;
         }
