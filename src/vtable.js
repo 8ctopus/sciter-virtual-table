@@ -34,7 +34,7 @@ export class VTable extends Element
     renderRow(index)
     {
         const row = (
-            <tr key={index} state-current={this.selected === index}>
+            <tr index={index} state-current={this.selected === index}>
                 <td>{index}</td>
                 <td>{ names[index % names.length] }</td>
                 <td>{ ages[index % ages.length] }</td>
@@ -149,14 +149,13 @@ export class VTable extends Element
         return true;
     }
 
-    onkeydown(event)
+    /**
+     * On keydown
+     * @param Event
+     * @param Element
+     */
+    onkeydown(event, element)
     {
-        console.note("keydown event");
-
-        //const index = row.elementIndex;
-
-        //console.debug(event.code, index);
-
         switch (event.code) {
             case "KeyUP":
                 if (this.selected > 0)
