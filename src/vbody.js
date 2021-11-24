@@ -161,6 +161,7 @@ export class VBody extends Element
      */
     onkeydown(event)
     {
+        console.line();
         console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
         console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
 
@@ -170,10 +171,19 @@ export class VBody extends Element
                     --this.selected;
 
                 // unselect row
-                this.children[this.selected + 1].state.current = false;
+                this.children[this.selected - this.vlist.firstBufferIndex + 1].state.current = false;
 
                 // select row
-                this.children[this.selected].state.current = true;
+                this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
+
+                // scroll window if needed
+                if (this.selected > 0 && this.selected == this.vlist.firstVisibleItem.attributes.index) {
+                    console.debug("navigate to", this.selected - 1)
+                    this.vlist.navigate(this.selected - 1);
+                    console.debug("first buffer index", this.vlist.firstBufferIndex, "last buffer index", this.vlist.lastBufferIndex);
+                    console.debug("first visible item", this.vlist.firstVisibleItem.attributes.index, "last visible item", this.vlist.lastVisibleItem.attributes.index);
+                }
+
                 break;
 
             case "KeyDOWN":
