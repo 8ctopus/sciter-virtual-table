@@ -211,12 +211,13 @@ export class VBody extends Element
                 }
 
                 break;
+
+            default:
+                // event not handled, propagate
+                return false;
         }
 
         console.debug("selected", this.selected);
-
-        // navigate to selected item
-        //this.vlist.navigate(this.selected);
 
         // event handled, no further propagation
         return true;
