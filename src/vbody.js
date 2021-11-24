@@ -63,12 +63,18 @@ export class VBody extends Element
      */
     #renderRow(index)
     {
+        let cells = [];
+
+        cells.push(<td>{index}</td>);
+
+        // add cells
+        for (let i = 0; i < this.data[0].length; ++i)
+            cells.push(<td>{ this.data[index][0] }</td>);
+
+        // create row
         const row = (
             <tr index={index} state-current={this.selected === index}>
-                <td>{index}</td>
-                <td>{ this.data[index][0] }</td>
-                <td>{ this.data[index][1] }</td>
-                <td>{ this.data[index][2] }</td>
+                {cells}
             </tr>
         );
 
