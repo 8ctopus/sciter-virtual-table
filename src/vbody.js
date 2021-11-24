@@ -166,6 +166,8 @@ export class VBody extends Element
      */
     onkeydown(event)
     {
+        //console.debug(event.code);
+
         console.line();
         this.debug();
 
