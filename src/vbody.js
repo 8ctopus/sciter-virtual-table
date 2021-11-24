@@ -1,8 +1,25 @@
 export class VBody extends Element
 {
-    items = 1000;
-
+    items;
     selected;
+
+    /**
+     * Constructor
+     */
+    constructor()
+    {
+        super();
+    }
+
+    /**
+     * On attached to DOM tree
+     * @return void
+     */
+    componentDidMount()
+    {
+        this.items = this.attributes.items ?? 1000;
+        console.debug(`virtual table contains ${this.items} items`);
+    }
 
     /**
      * Content required
