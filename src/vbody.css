@@ -24,7 +24,7 @@
         //overflow-x: hidden;
     }
 
-    :root > tr > td:nth-child(3) {
+    :root > tr > td:last-child {
         width: *;
 
         overflow-x: hidden;

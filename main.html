@@ -39,12 +39,16 @@ table > thead > tr > th {
     padding: 0 0.3em;
 }
 
-table > thead > tr > th:nth-child(1),
-table > thead > tr > th:nth-child(2) {
-    width: 8em;
+table > thead > tr > th:nth-child(1) {
+    min-width: 3em;
 }
 
+table > thead > tr > th:nth-child(2),
 table > thead > tr > th:nth-child(3) {
+    width: 10em;
+}
+
+table > thead > tr > th:last-child {
     width: *;
 }
 
@@ -87,8 +91,10 @@ document.ready = function() {
     // bring window to front and set input focus
     Window.this.activate(true);
 
-    // populate table
-    document.$("tbody").setData(createTableData(50));
+    let data = createTableData(50);
+
+    // send data to table
+    document.$("tbody").setData(data);
 }
 
 /**
@@ -109,7 +115,7 @@ function unhandledExceptionHandler(e)
  */
 function createTableData(count)
 {
-    const names = [
+    const firstNames = [
         "Antony",
         "David",
         "Julien",
@@ -118,6 +124,18 @@ function createTableData(count)
         "Olivier",
         "Patrick",
         "Vincent",
+    ];
+
+    const lastNames = [
+        "Smith",
+        "Johnson",
+        "Williams",
+        "Brown",
+        "Jones",
+        "Miller",
+        "Davis",
+        "",
+        "",
     ];
 
     const ages = [
@@ -135,7 +153,8 @@ function createTableData(count)
 
     for (let i = 0; i < count; ++i) {
         data.push([
-            names[i % names.length],
+            firstNames[i % firstNames.length],
+            lastNames[i % lastNames.length],
             ages[i % ages.length],
         ]);
     }
@@ -197,7 +216,8 @@ document.on("click", "button", function(event, element) {
     <table>
         <thead>
             <th>index</th>
-            <th>name</th>
+            <th>first name</th>
+            <th>last name</th>
             <th>age</th>
         </thead>
         <tbody styleset="#vbody" />

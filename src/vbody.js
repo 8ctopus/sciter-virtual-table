@@ -67,6 +67,7 @@ export class VBody extends Element
                 <td>{index}</td>
                 <td>{ this.data[index][0] }</td>
                 <td>{ this.data[index][1] }</td>
+                <td>{ this.data[index][2] }</td>
             </tr>
         );
 
