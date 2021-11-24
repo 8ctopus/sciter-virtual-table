@@ -1,7 +1,7 @@
-@set vtable {
+@set vbody {
     :root {
         behavior: virtual-list;
-        prototype: VTable url(vtable.js);
+        prototype: VBody url(vbody.js);
 
         size: *;
 

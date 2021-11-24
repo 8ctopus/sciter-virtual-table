@@ -1,4 +1,4 @@
-export class VTable extends Element
+export class VBody extends Element
 {
     items = 50;
 
