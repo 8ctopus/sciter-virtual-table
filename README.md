@@ -2,7 +2,9 @@
 
 Exploring [sciter.js](https://sciter.com/) virtual tables.
 
-The project is derivated from the [virtual table example](https://github.com/c-smile/sciter-js-sdk/blob/main/samples.sciter/virtual-list/test-table.htm).
+This project is derivated from the [virtual table example](https://github.com/c-smile/sciter-js-sdk/blob/main/samples.sciter/virtual-list/test-table.htm).
+
+![sciter virtual table screenshot](screenshot.png)
 
 ## demo
 
@@ -31,3 +33,7 @@ index of first element that is in memory
 - `lastBufferIndex: int`
 
 index of last element that is in memory
+
+## how it actually works inside
+
+![virtual-list screenshot](virtual-list.png)
