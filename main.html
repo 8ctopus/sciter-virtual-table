@@ -233,8 +233,45 @@ class VTable extends Element
         // get row index in table
         this.selected = row.elementIndex;
 
+        console.debug(this.selected);
+
         // change row state
         row.state.current = true;
+
+        return true;
+    }
+
+    onkeydown(event)
+    {
+        console.note("keydown event");
+
+        //const index = row.elementIndex;
+
+        //console.debug(event.code, index);
+
+        switch (event.code) {
+            case "KeyUP":
+                if (this.selected > 0)
+                    --this.selected;
+
+                // change row state
+                this.children[this.selected].state.current = true;
+                this.children[this.selected + 1].state.current = false;
+                break;
+
+            case "KeyDOWN":
+                if (this.selected < this.items -1)
+                    ++this.selected;
+
+                // change row state
+                this.children[this.selected - 1].state.current = false;
+                this.children[this.selected].state.current = true;
+                break;
+        }
+
+        console.debug(this.selected);
+
+        return true;
     }
 }
 
