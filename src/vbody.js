@@ -3,28 +3,6 @@ export class VBody extends Element
     items;
     selected;
 
-    names = [
-        "Antony",
-        "David",
-        "Julien",
-        "Laurent",
-        "Marc",
-        "Olivier",
-        "Patrick",
-        "Vincent",
-    ];
-
-    ages = [
-        45,
-        18,
-        34,
-        20,
-        27,
-        29,
-        30,
-        37
-    ];
-
     /**
      * Constructor
      */
@@ -72,11 +50,13 @@ export class VBody extends Element
      */
     renderRow(index)
     {
+        let data = getData(index);
+
         const row = (
             <tr index={index} state-current={this.selected === index}>
                 <td>{index}</td>
-                <td>{ this.names[index % this.names.length] }</td>
-                <td>{ this.ages[index % this.ages.length] }</td>
+                <td>{ data[0] }</td>
+                <td>{ data[1] }</td>
             </tr>
         );
 

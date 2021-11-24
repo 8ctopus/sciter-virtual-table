@@ -99,6 +99,38 @@ function unhandledExceptionHandler(e)
     typeof console.exception === "function" ? console.exception(e) : console.error(e);
 }
 
+function getData(index)
+{
+    let names = [
+        "Antony",
+        "David",
+        "Julien",
+        "Laurent",
+        "Marc",
+        "Olivier",
+        "Patrick",
+        "Vincent",
+    ];
+
+    let ages = [
+        45,
+        18,
+        34,
+        20,
+        27,
+        29,
+        30,
+        37
+    ];
+
+    return [
+        names[index % names.length],
+        ages[index % ages.length],
+    ];
+}
+
+globalThis.getData = getData;
+
 document.on("click", "button", function(event, element) {
     let vbody = document.$("tbody");
 
