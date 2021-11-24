@@ -45,14 +45,14 @@ export class VBody extends Element
 
         if (where > 0)
             // scrolling down, need to append more elements
-            event.data = this.appendRows(start, length);
+            event.data = this.#appendRows(start, length);
         else
         if (where < 0)
             // scrolling up, need to prepend more elements
-            event.data = this.prependRows(start, length);
+            event.data = this.#prependRows(start, length);
         else
             // scrolling to index
-            event.data = this.replaceRows(start, length);
+            event.data = this.#replaceRows(start, length);
 
         return true;
     }
@@ -61,7 +61,7 @@ export class VBody extends Element
      * Render row
      * @param int row index
      */
-    renderRow(index)
+    #renderRow(index)
     {
         const row = (
             <tr index={index} state-current={this.selected === index}>
@@ -81,7 +81,7 @@ export class VBody extends Element
      * @param int length
      * @return object
      */
-    appendRows(index, length)
+    #appendRows(index, length)
     {
         console.debug(`appendRows(${index}, ${length})`);
 
@@ -95,7 +95,7 @@ export class VBody extends Element
             if (index >= this.items)
                 break;
 
-            elements.push(this.renderRow(index));
+            elements.push(this.#renderRow(index));
         }
 
         this.append(elements);
@@ -112,7 +112,7 @@ export class VBody extends Element
      * @param int length
      * @return object
      */
-    prependRows(index, length)
+    #prependRows(index, length)
     {
         console.debug(`prependRows(${index}, ${length})`);
 
@@ -126,7 +126,7 @@ export class VBody extends Element
             if (index < 0)
                 break;
 
-            elements.push(this.renderRow(index));
+            elements.push(this.#renderRow(index));
         }
 
         elements.reverse();
@@ -145,7 +145,7 @@ export class VBody extends Element
      * @param int length
      * @return object
      */
-    replaceRows(index, length)
+    #replaceRows(index, length)
     {
         console.debug(`replaceRows(${index}, ${length})`);
 
@@ -156,7 +156,7 @@ export class VBody extends Element
             if (index >= this.items)
                 break;
 
-            elements.push(this.renderRow(index));
+            elements.push(this.#renderRow(index));
         }
 
         this.patch(elements);
@@ -176,7 +176,7 @@ export class VBody extends Element
      */
     ["on click at tr"](event, row)
     {
-        this.debug();
+        this.#debug();
 
         // get row index in table
         this.selected = row.elementIndex;
@@ -200,7 +200,7 @@ export class VBody extends Element
         //console.debug(event.code);
 
         console.line();
-        this.debug();
+        this.#debug();
 
         switch (event.code) {
             case "KeyUP":
@@ -220,7 +220,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex -1);
                     this.vlist.navigate(firstVisibleIndex -1);
 
-                    this.debug();
+                    this.#debug();
                 }
 
                 break;
@@ -242,7 +242,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex + 1);
                     this.vlist.navigate(firstVisibleIndex +1);
 
-                    this.debug();
+                    this.#debug();
                 }
 
                 break;
@@ -262,7 +262,7 @@ export class VBody extends Element
      * Debug list
      * @return void
      */
-    debug()
+    #debug()
     {
         console.debug(`buffered [${this.vlist.firstBufferIndex}-${this.vlist.lastBufferIndex}]`);
         console.debug(`visible  [${this.vlist.firstVisibleItem.attributes.index}-${this.vlist.lastVisibleItem.attributes.index}]`);
