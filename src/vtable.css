@@ -1,7 +1,3 @@
-table > tbody {
-    style-set: vtable;
-}
-
 @set vtable {
     :root {
         behavior: virtual-list;
