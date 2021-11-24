@@ -141,7 +141,7 @@ export class VBody extends Element
         // get row index in table
         this.selected = row.elementIndex;
 
-        console.debug(this.selected);
+        console.debug(this.selected, this.vlist.firstBufferIndex);
 
         // change row state
         row.state.current = true;
@@ -176,7 +176,7 @@ export class VBody extends Element
                 break;
         }
 
-        console.debug(this.selected);
+        console.debug(this.selected, this.vlist.firstBufferIndex);
 
         return true;
     }

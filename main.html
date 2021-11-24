@@ -123,9 +123,57 @@ function unhandledExceptionHandler(e)
     typeof console.exception === "function" ? console.exception(e) : console.error(e);
 }
 
+document.on("click", "button", function(event, element) {
+    let vbody = document.$("tbody");
+
+    if (!vbody)
+        throw new Error("vbody not found");
+
+    let position;
+
+    switch (element.innerText.toLowerCase()) {
+        case "start":
+            position = "start";
+            break;
+
+        case "end":
+            position = "end";
+            break;
+
+        case "previous page":
+            position = "pageprior";
+            break;
+
+        case "next page":
+            position = "pagenext";
+            break;
+
+        case "previous item":
+            position = "itemprior";
+            break;
+
+        case "next item":
+            position = "itemnext";
+            break;
+
+        default:
+            throw new Error("unknown button");
+    }
+
+    vbody.vlist.navigate(position);
+})
+
 </script>
 </head>
 <body>
+    <div>
+        <button>Start</button>
+        <button>End</button>
+        <button>Next page</button>
+        <button>Previous page</button>
+        <button>Previous item</button>
+        <button>Next item</button>
+    </div>
     <table>
         <thead>
             <th>index</th>
