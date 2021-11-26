@@ -1,7 +1,7 @@
 export class VBody extends Element
 {
     data  = null;
-    items = 0;
+    count = 0;
     selected;
 
     /**
@@ -18,8 +18,8 @@ export class VBody extends Element
      */
     componentDidMount()
     {
-        //this.items = this.attributes.items ?? 1000;
-        //console.debug(`virtual table contains ${this.items} items`);
+        //this.count = this.attributes.count ?? 1000;
+        //console.debug(`virtual table contains ${this.count} count`);
     }
 
     /**
@@ -29,7 +29,7 @@ export class VBody extends Element
     componentUpdate(data)
     {
         this.data  = data.data;
-        this.items = this.data.length;
+        this.count = this.data.length;
 
         //this.render();
     }
@@ -98,7 +98,7 @@ export class VBody extends Element
         let elements = [];
 
         for (let i = 0; i < length; ++i, ++index) {
-            if (index >= this.items)
+            if (index >= this.count)
                 break;
 
             elements.push(this.#renderRow(index));
@@ -108,7 +108,7 @@ export class VBody extends Element
 
         // return estimated number of items below
         return {
-            moreafter: this.items - index
+            moreafter: this.count - index
         };
     }
 
@@ -123,7 +123,7 @@ export class VBody extends Element
         console.debug(`prependRows(${index}, ${length})`);
 
         if (index === undefined)
-            index = this.items - 1;
+            index = this.count - 1;
 
         // create rows
         let elements = [];
@@ -159,7 +159,7 @@ export class VBody extends Element
         let start = index;
 
         for (let i = 0; i < length; ++i, ++index) {
-            if (index >= this.items)
+            if (index >= this.count)
                 break;
 
             elements.push(this.#renderRow(index));
@@ -170,7 +170,7 @@ export class VBody extends Element
         // return estimated number of items before and above this chunk
         return {
             morebefore: start <= 0 ? 0 : start,
-            moreafter: this.items - index
+            moreafter: this.count - index
         };
     }
 
@@ -232,7 +232,7 @@ export class VBody extends Element
                 break;
 
             case "KeyDOWN":
-                if (this.selected < this.items -1)
+                if (this.selected < this.count -1)
                     ++this.selected;
 
                 // unselect row
@@ -242,7 +242,7 @@ export class VBody extends Element
                 this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
 
                 // scroll window if needed
-                if (this.selected < this.items -1 && this.selected == this.vlist.lastVisibleItem.attributes.index) {
+                if (this.selected < this.count -1 && this.selected == this.vlist.lastVisibleItem.attributes.index) {
                     const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
                     console.debug("navigate to", firstVisibleIndex + 1);
