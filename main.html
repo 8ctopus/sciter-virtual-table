@@ -230,6 +230,10 @@ document.on("click", "button", function(event, element) {
     vbody.vlist.navigate(position);
 });
 
+document.on("selected", "table > tbody", function(event) {
+    console.debug("selected", event.detail.selected);
+});
+
 </script>
 </head>
 <body>

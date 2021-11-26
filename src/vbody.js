@@ -223,6 +223,14 @@ export class VBody extends Element
         // change row state
         row.state.current = true;
 
+        // send selected event
+        this.postEvent(new CustomEvent("selected", {
+            bubbles: true,
+            detail: {
+                selected: this.selected,
+            }
+        }));
+
         // event handled, no further propagation
         return true;
     }
