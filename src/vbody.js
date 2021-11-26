@@ -1,8 +1,8 @@
 export class VBody extends Element
 {
-    data  = null;
-    count = 0;
-    rows  = null;
+    data    = null;
+    count   = 0;
+    columns = null;
 
     selected;
 
@@ -33,10 +33,10 @@ export class VBody extends Element
         this.data  = data.data;
         this.count = this.data.length;
 
-        if (data.rows)
-            this.rows = data.rows;
+        if (data.columns)
+            this.columns = data.columns;
         else
-            this.rows = null;
+            this.columns = null;
 
         //this.render();
     }
@@ -74,13 +74,15 @@ export class VBody extends Element
 
         cells.push(<td>{index}</td>);
 
-        // add cells
-        if (this.rows) {
-            this.rows.forEach(row => {
+        // add row cells
+        if (this.columns) {
+            // show selected columns
+            this.columns.forEach(row => {
                 cells.push(<td>{ this.data[index][row] }</td>);
             });
         }
         else
+            // show all columns
             for (let i = 0; i < this.data[0].length; ++i)
                 cells.push(<td>{ this.data[index][0] }</td>);
 
