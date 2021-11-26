@@ -7,14 +7,6 @@ export class VBody extends Element
     selected;
 
     /**
-     * Constructor
-     */
-    constructor()
-    {
-        super();
-    }
-
-    /**
      * On attached to DOM tree
      * @return void
      */

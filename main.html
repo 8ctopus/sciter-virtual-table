@@ -1,6 +1,6 @@
 <html
     window-resizable="true"
-    window-width="600dip"
+    window-width="650dip"
     window-height="600dip"
 >
 <head>
@@ -70,6 +70,8 @@ logger.attach();
 // capture unhandled exceptions
 logger.capture(unhandledExceptionHandler);
 
+let data;
+
 document.ready = function() {
     // subscribe to logger messages
     logger.plaintext(document.$("plaintext#logger"));
@@ -92,7 +94,7 @@ document.ready = function() {
     // bring window to front and set input focus
     Window.this.activate(true);
 
-    let data = createTableData(50);
+    data = createTableData(50);
 
     // send data to table
     document.$("tbody").componentUpdate({
@@ -178,7 +180,7 @@ function createTableData(count)
 }
 
 document.on("click", "button", function(event, element) {
-    let vbody = document.$("tbody");
+    let vbody = document.$("table > tbody");
 
     if (!vbody)
         throw new Error("vbody not found");
@@ -210,6 +212,15 @@ document.on("click", "button", function(event, element) {
             position = "itemnext";
             break;
 
+        case "update data":
+            // update data
+            data[0][1] = "Updated name";
+
+            // request repaint
+            //vbody.invalidate();
+
+            break;
+
         default:
             throw new Error("unknown button");
     }
@@ -227,6 +238,7 @@ document.on("click", "button", function(event, element) {
         <button accesskey="!END">End</button>
         <button accesskey="!PRIOR">Previous page</button>
         <button accesskey="!NEXT">Next page</button>
+        <button>Update data</button>
     </div>
     <table>
         <thead>
