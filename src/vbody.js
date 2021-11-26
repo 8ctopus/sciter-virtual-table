@@ -45,7 +45,8 @@ export class VBody extends Element
      */
     update()
     {
-        this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
+        if (this.vlist.firstBufferIndex !== undefined)
+            this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
     }
 
     /**
@@ -55,6 +56,8 @@ export class VBody extends Element
      */
     oncontentrequired(event)
     {
+        console.debug("content required");
+
         let {length, start, where} = event.data;
 
         if (where > 0)
