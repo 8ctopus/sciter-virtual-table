@@ -2,6 +2,8 @@ export class VBody extends Element
 {
     data  = null;
     count = 0;
+    rows  = null;
+
     selected;
 
     /**
@@ -30,6 +32,11 @@ export class VBody extends Element
     {
         this.data  = data.data;
         this.count = this.data.length;
+
+        if (data.rows)
+            this.rows = data.rows;
+        else
+            this.rows = null;
 
         //this.render();
     }
@@ -68,8 +75,14 @@ export class VBody extends Element
         cells.push(<td>{index}</td>);
 
         // add cells
-        for (let i = 0; i < this.data[0].length; ++i)
-            cells.push(<td>{ this.data[index][0] }</td>);
+        if (this.rows) {
+            this.rows.forEach(row => {
+                cells.push(<td>{ this.data[index][row] }</td>);
+            });
+        }
+        else
+            for (let i = 0; i < this.data[0].length; ++i)
+                cells.push(<td>{ this.data[index][0] }</td>);
 
         // create row
         const row = (
