@@ -1,5 +1,7 @@
 export class VBody extends Element
 {
+    debug;
+
     data    = null;
     count   = 0;
     columns = null;
@@ -14,6 +16,7 @@ export class VBody extends Element
     {
         //this.count = this.attributes.count ?? 1000;
         //console.debug(`virtual table contains ${this.count} count`);
+        this.debug = this.hasAttribute("debug");
     }
 
     /**
@@ -47,6 +50,8 @@ export class VBody extends Element
     {
         if (this.vlist.firstBufferIndex !== undefined)
             this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
+        else
+            this.#appendRows(0, 100);
     }
 
     /**
@@ -82,7 +87,8 @@ export class VBody extends Element
     {
         let cells = [];
 
-        cells.push(<td>{index}</td>);
+        if (this.debug)
+            cells.push(<td>{index}</td>);
 
         // add row cells
         if (this.columns) {
