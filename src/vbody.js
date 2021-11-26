@@ -19,18 +19,33 @@ export class VBody extends Element
     /**
      * Update component
      * @param object data
+     * @return void
      */
     componentUpdate(data)
     {
-        this.data  = data.data;
-        this.count = this.data.length;
+        if (data === undefined)
+            return;
+
+        if (data.data) {
+            this.data  = data.data;
+            this.count = this.data.length;
+        }
 
         if (data.columns)
             this.columns = data.columns;
         else
             this.columns = null;
 
-        //this.render();
+        this.update();
+    }
+
+    /**
+     * Repaint component
+     * @return void
+     */
+    update()
+    {
+        this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
     }
 
     /**

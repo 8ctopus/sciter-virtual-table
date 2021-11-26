@@ -94,7 +94,7 @@ document.ready = function() {
     // bring window to front and set input focus
     Window.this.activate(true);
 
-    data = createTableData(50);
+    data = createTableData(250);
 
     // send data to table
     document.$("tbody").componentUpdate({
@@ -216,8 +216,10 @@ document.on("click", "button", function(event, element) {
             // update data
             data[0][1] = "Updated name";
 
-            // request repaint
-            //vbody.invalidate();
+            console.debug("data updated");
+
+            // repaint table
+            vbody.update();
 
             break;
 
