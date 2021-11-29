@@ -252,6 +252,8 @@ export class VBody extends Element
                 // select row
                 this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
 
+                this.#sendEventSelected();
+
                 // scroll window if needed
                 const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
@@ -259,7 +261,6 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex -1);
                     this.vlist.navigate(firstVisibleIndex -1);
 
-                    this.#sendEventSelected();
                     this.#debug();
                 }
 
@@ -275,6 +276,8 @@ export class VBody extends Element
                 // select row
                 this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
 
+                this.#sendEventSelected();
+
                 // scroll window if needed
                 if (this.selected < this.count -1 && this.selected == this.vlist.lastVisibleItem.attributes.index) {
                     const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
@@ -282,7 +285,6 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex + 1);
                     this.vlist.navigate(firstVisibleIndex +1);
 
-                    this.#sendEventSelected();
                     this.#debug();
                 }
 
