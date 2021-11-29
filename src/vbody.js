@@ -223,13 +223,7 @@ export class VBody extends Element
         // change row state
         row.state.current = true;
 
-        // send selected event
-        this.postEvent(new CustomEvent("selected", {
-            bubbles: true,
-            detail: {
-                selected: this.selected,
-            }
-        }));
+        this.#sendEventSelected();
 
         // event handled, no further propagation
         return true;
@@ -265,6 +259,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex -1);
                     this.vlist.navigate(firstVisibleIndex -1);
 
+                    this.#sendEventSelected();
                     this.#debug();
                 }
 
@@ -287,6 +282,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex + 1);
                     this.vlist.navigate(firstVisibleIndex +1);
 
+                    this.#sendEventSelected();
                     this.#debug();
                 }
 
@@ -311,5 +307,20 @@ export class VBody extends Element
     {
         console.debug(`buffered [${this.vlist.firstBufferIndex}-${this.vlist.lastBufferIndex}]`);
         console.debug(`visible  [${this.vlist.firstVisibleItem.attributes.index}-${this.vlist.lastVisibleItem.attributes.index}]`);
+    }
+
+    /**
+     * Send row selected event
+     * @return void
+     */
+    #sendEventSelected()
+    {
+        // send selected event
+        this.postEvent(new CustomEvent("selected", {
+            bubbles: true,
+            detail: {
+                selected: this.selected,
+            }
+        }));
     }
 }
