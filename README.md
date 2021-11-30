@@ -14,6 +14,26 @@ This project is derivated from the [virtual table example](https://github.com/c-
 - install packages `php bin/spm.phar install`
 - run `start.bat` (Win) or `./start.sh` (Linux/Mac)
 
+## install
+
+- add the `src` dir to your project or use the sciter package manager
+- in your code
+
+```html
+<style src="src/vbody.css" />
+<body>
+    <table>
+        <thead>
+            <th>index</th>
+            <th>first name</th>
+            <th>middle name</th>
+            <th>last name</th>
+            <th>age</th>
+        </thead>
+        <tbody styleset="#vbody" />
+    </table>
+```
+
 ## how it actually works
 
 Virtual lists are virtual because they add only part of the data to the html DOM in order to make the app faster. In the screenshot below, the yellow and blue rows 6 to 22 are added to the DOM, the blue rows are visible in the interface and the gray rows at both ends are neither added to the DOM, nor visible.
