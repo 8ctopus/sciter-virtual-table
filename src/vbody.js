@@ -211,7 +211,7 @@ export class VBody extends Element
      */
     ["on click at tr"](event, row)
     {
-        this.#debug();
+        this.#debugInfo();
 
         // get row index in table
         this.#selected = row.elementIndex;
@@ -237,7 +237,7 @@ export class VBody extends Element
         //console.debug(event.code);
 
         console.line();
-        this.#debug();
+        this.#debugInfo();
 
         switch (event.code) {
             case "KeyUP":
@@ -259,7 +259,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex -1);
                     this.vlist.navigate(firstVisibleIndex -1);
 
-                    this.#debug();
+                    this.#debugInfo();
                 }
 
                 break;
@@ -283,7 +283,7 @@ export class VBody extends Element
                     console.debug("navigate to", firstVisibleIndex + 1);
                     this.vlist.navigate(firstVisibleIndex +1);
 
-                    this.#debug();
+                    this.#debugInfo();
                 }
 
                 break;
@@ -303,7 +303,7 @@ export class VBody extends Element
      * Debug list
      * @return void
      */
-    #debug()
+    #debugInfo()
     {
         console.debug(`buffered [${this.vlist.firstBufferIndex}-${this.vlist.lastBufferIndex}]`);
         console.debug(`visible  [${this.vlist.firstVisibleItem.attributes.index}-${this.vlist.lastVisibleItem.attributes.index}]`);
