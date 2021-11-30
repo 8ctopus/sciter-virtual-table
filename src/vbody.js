@@ -1,12 +1,12 @@
 export class VBody extends Element
 {
-    debug;
+    #debug;
 
-    data    = null;
-    count   = 0;
-    columns = null;
+    #data    = null;
+    #count   = 0;
+    #columns = null;
 
-    selected;
+    #selected;
 
     /**
      * On attached to DOM tree
@@ -14,9 +14,7 @@ export class VBody extends Element
      */
     componentDidMount()
     {
-        //this.count = this.attributes.count ?? 1000;
-        //console.debug(`virtual table contains ${this.count} count`);
-        this.debug = this.hasAttribute("debug");
+        this.#debug = this.hasAttribute("debug");
     }
 
     /**
@@ -30,14 +28,14 @@ export class VBody extends Element
             return;
 
         if (data.data) {
-            this.data  = data.data;
-            this.count = this.data.length;
+            this.#data  = data.data;
+            this.#count = this.#data.length;
         }
 
         if (data.columns)
-            this.columns = data.columns;
+            this.#columns = data.columns;
         else
-            this.columns = null;
+            this.#columns = null;
 
         this.update();
     }
@@ -87,24 +85,24 @@ export class VBody extends Element
     {
         let cells = [];
 
-        if (this.debug)
+        if (this.#debug)
             cells.push(<td>{index}</td>);
 
         // add row cells
-        if (this.columns) {
+        if (this.#columns) {
             // show selected columns
-            this.columns.forEach(row => {
-                cells.push(<td>{ this.data[index][row] }</td>);
+            this.#columns.forEach(row => {
+                cells.push(<td>{ this.#data[index][row] }</td>);
             });
         }
         else
             // show all columns
-            for (let i = 0; i < this.data[0].length; ++i)
-                cells.push(<td>{ this.data[index][0] }</td>);
+            for (let i = 0; i < this.#data[0].length; ++i)
+                cells.push(<td>{ this.#data[index][0] }</td>);
 
         // create row
         const row = (
-            <tr index={index} state-current={this.selected === index}>
+            <tr index={index} state-current={this.#selected === index}>
                 {cells}
             </tr>
         );
@@ -129,7 +127,7 @@ export class VBody extends Element
         let elements = [];
 
         for (let i = 0; i < length; ++i, ++index) {
-            if (index >= this.count)
+            if (index >= this.#count)
                 break;
 
             elements.push(this.#renderRow(index));
@@ -139,7 +137,7 @@ export class VBody extends Element
 
         // return estimated number of items below
         return {
-            moreafter: this.count - index
+            moreafter: this.#count - index
         };
     }
 
@@ -154,7 +152,7 @@ export class VBody extends Element
         console.debug(`prependRows(${index}, ${length})`);
 
         if (index === undefined)
-            index = this.count - 1;
+            index = this.#count - 1;
 
         // create rows
         let elements = [];
@@ -190,7 +188,7 @@ export class VBody extends Element
         let start = index;
 
         for (let i = 0; i < length; ++i, ++index) {
-            if (index >= this.count)
+            if (index >= this.#count)
                 break;
 
             elements.push(this.#renderRow(index));
@@ -201,7 +199,7 @@ export class VBody extends Element
         // return estimated number of items before and above this chunk
         return {
             morebefore: start <= 0 ? 0 : start,
-            moreafter: this.count - index
+            moreafter: this.#count - index
         };
     }
 
@@ -216,9 +214,9 @@ export class VBody extends Element
         this.#debug();
 
         // get row index in table
-        this.selected = row.elementIndex;
+        this.#selected = row.elementIndex;
 
-        console.debug("selected", this.selected);
+        console.debug("selected", this.#selected);
 
         // change row state
         row.state.current = true;
@@ -243,21 +241,21 @@ export class VBody extends Element
 
         switch (event.code) {
             case "KeyUP":
-                if (this.selected > 0)
-                    --this.selected;
+                if (this.#selected > 0)
+                    --this.#selected;
 
                 // unselect row
-                this.children[this.selected - this.vlist.firstBufferIndex + 1].state.current = false;
+                this.children[this.#selected - this.vlist.firstBufferIndex + 1].state.current = false;
 
                 // select row
-                this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
+                this.children[this.#selected - this.vlist.firstBufferIndex].state.current = true;
 
                 this.#sendEventSelected();
 
                 // scroll window if needed
                 const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
-                if (this.selected > 0 && this.selected === firstVisibleIndex) {
+                if (this.#selected > 0 && this.#selected === firstVisibleIndex) {
                     console.debug("navigate to", firstVisibleIndex -1);
                     this.vlist.navigate(firstVisibleIndex -1);
 
@@ -267,19 +265,19 @@ export class VBody extends Element
                 break;
 
             case "KeyDOWN":
-                if (this.selected < this.count -1)
-                    ++this.selected;
+                if (this.#selected < this.#count -1)
+                    ++this.#selected;
 
                 // unselect row
-                this.children[this.selected - this.vlist.firstBufferIndex - 1].state.current = false;
+                this.children[this.#selected - this.vlist.firstBufferIndex - 1].state.current = false;
 
                 // select row
-                this.children[this.selected - this.vlist.firstBufferIndex].state.current = true;
+                this.children[this.#selected - this.vlist.firstBufferIndex].state.current = true;
 
                 this.#sendEventSelected();
 
                 // scroll window if needed
-                if (this.selected < this.count -1 && this.selected == this.vlist.lastVisibleItem.attributes.index) {
+                if (this.#selected < this.#count -1 && this.#selected == this.vlist.lastVisibleItem.attributes.index) {
                     const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
                     console.debug("navigate to", firstVisibleIndex + 1);
@@ -295,7 +293,7 @@ export class VBody extends Element
                 return false;
         }
 
-        console.debug("selected", this.selected);
+        console.debug("selected", this.#selected);
 
         // event handled, no further propagation
         return true;
@@ -321,7 +319,7 @@ export class VBody extends Element
         this.postEvent(new CustomEvent("selected", {
             bubbles: true,
             detail: {
-                selected: this.selected,
+                selected: this.#selected,
             }
         }));
     }
