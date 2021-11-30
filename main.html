@@ -1,6 +1,6 @@
 <html
     window-resizable="true"
-    window-width="650dip"
+    window-width="700dip"
     window-height="600dip"
 >
 <head>
@@ -96,12 +96,16 @@ document.ready = function() {
 
     data = createTableData(250);
 
+    const table = document.$("tbody");
+
     // send data to table
-    document.$("tbody").componentUpdate({
+    table.componentUpdate({
         data: data,
         // columns to show
         columns: [0,1,2,3],
     });
+
+    table.select(0);
 }
 
 /**
@@ -223,6 +227,10 @@ document.on("click", "button", function(event, element) {
 
             break;
 
+        case "select row":
+            vbody.select(0);
+            break;
+
         default:
             throw new Error("unknown button");
     }
@@ -245,6 +253,7 @@ document.on("selected", "table > tbody", function(event) {
         <button accesskey="!PRIOR">Previous page</button>
         <button accesskey="!NEXT">Next page</button>
         <button>Update data</button>
+        <button>Select row</button>
     </div>
     <table>
         <thead>

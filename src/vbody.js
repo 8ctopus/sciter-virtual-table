@@ -293,8 +293,9 @@ export class VBody extends Element
      */
     select(row)
     {
-        // unselect currently selected row
-        this.children[this.#selected - this.vlist.firstBufferIndex].state.current = false;
+        if (this.#selected !== undefined)
+            // unselect currently selected row
+            this.children[this.#selected - this.vlist.firstBufferIndex].state.current = false;
 
         this.#selected = row;
 
