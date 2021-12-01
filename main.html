@@ -238,8 +238,8 @@ document.on("click", "button", function(event, element) {
     vbody.vlist.navigate(position);
 });
 
-document.on("selected", "table > tbody", function(event) {
-    console.debug("selected", event.detail.selected);
+document.on("selected", "table > tbody", function(event, body) {
+    console.debug("selected row", event.detail.selected, body.selected());
 });
 
 </script>

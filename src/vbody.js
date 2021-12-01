@@ -242,7 +242,7 @@ export class VBody extends Element
         switch (event.code) {
             case "KeyUP":
                 if (this.#selected > 0)
-                    this.select(this.#selected - 1);
+                    this.select(--this.#selected);
 
                 this.#sendEventSelected();
 
@@ -260,7 +260,7 @@ export class VBody extends Element
 
             case "KeyDOWN":
                 if (this.#selected < this.#count -1)
-                    this.select(this.#selected + 1);
+                    this.select(++this.#selected);
 
                 this.#sendEventSelected();
 
@@ -301,6 +301,15 @@ export class VBody extends Element
 
         // select new row
         this.children[this.#selected - this.vlist.firstBufferIndex].state.current = true;
+    }
+
+    /**
+     * Get selected row
+     * @return int
+     */
+    selected()
+    {
+        return this.#selected;
     }
 
     /**
