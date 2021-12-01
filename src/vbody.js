@@ -30,6 +30,7 @@ export class VBody extends Element
         if (data.data) {
             this.#data  = data.data;
             this.#count = this.#data.length;
+            this.#selected = undefined;
         }
 
         if (data.columns)
@@ -293,6 +294,9 @@ export class VBody extends Element
      */
     select(row)
     {
+        if (this.#count === 0)
+            return;
+
         if (this.#selected !== undefined)
             // unselect currently selected row
             this.children[this.#selected - this.vlist.firstBufferIndex].state.current = false;
