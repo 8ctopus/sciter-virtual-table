@@ -215,14 +215,7 @@ export class VBody extends Element
         this.#debugInfo();
 
         // get row index in table
-        this.#selected = row.elementIndex;
-
-        console.debug("selected", this.#selected);
-
-        // change row state
-        row.state.current = true;
-
-        this.#sendEventSelected();
+        this.select(row.elementIndex);
 
         // event handled, no further propagation
         return true;
@@ -305,6 +298,8 @@ export class VBody extends Element
 
         // select new row
         this.children[this.#selected - this.vlist.firstBufferIndex].state.current = true;
+
+        this.#sendEventSelected();
     }
 
     /**
