@@ -294,6 +294,9 @@ export class VBody extends Element
      */
     select(row)
     {
+        if (row === undefined || row < 0 || this.#count === 0 || row > this.#count)
+            return;
+
         // unselect currently selected row
         this.#setRowState(this.#selected, false);
 
@@ -304,6 +307,15 @@ export class VBody extends Element
 
         // dispatch event
         this.#sendEventSelected();
+    }
+
+    /**
+     * Get rows count
+     * @return int
+     */
+    count()
+    {
+        return this.#count;
     }
 
     /**
@@ -325,9 +337,6 @@ export class VBody extends Element
     {
         if (this.#debug)
             console.debug("set row state", row, state);
-
-        if (row === undefined || row < 0 || this.#count === 0 || row > this.#count)
-            return;
 
         const index = row - this.vlist.firstBufferIndex;
 

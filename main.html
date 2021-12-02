@@ -216,6 +216,14 @@ document.on("click", "button", function(event, element) {
             position = "itemnext";
             break;
 
+        case "rows count":
+            console.debug("rows count", vbody.count());
+            break;
+
+        case "select row":
+            vbody.select(0);
+            break;
+
         case "update data":
             // update data
             data[0][1] = "Updated name";
@@ -227,8 +235,12 @@ document.on("click", "button", function(event, element) {
 
             break;
 
-        case "select row":
-            vbody.select(0);
+        case "empty data":
+            vbody.componentUpdate({
+                data: [],
+                // columns to show
+                columns: [],
+            });
             break;
 
         default:
@@ -253,8 +265,12 @@ document.on("selected", "table > tbody", function(event, body) {
         <button accesskey="!END">End</button>
         <button accesskey="!PRIOR">Previous page</button>
         <button accesskey="!NEXT">Next page</button>
-        <button>Update data</button>
+    </div>
+    <div>
+        <button>Rows count</button>
         <button>Select row</button>
+        <button>Update data</button>
+        <button>Empty data</button>
     </div>
     <table>
         <thead>
