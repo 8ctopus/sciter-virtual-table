@@ -239,7 +239,8 @@ document.on("click", "button", function(event, element) {
 });
 
 document.on("selected", "table > tbody", function(event, body) {
-    console.debug("selected row", event.detail.selected, body.selected());
+    if (body.hasAttribute("debug"))
+        console.debug("selected row", event.detail.selected, body.selected());
 });
 
 </script>

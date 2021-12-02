@@ -60,7 +60,8 @@ export class VBody extends Element
      */
     oncontentrequired(event)
     {
-        console.debug("content required");
+        if (this.#debug)
+            console.debug("on content required");
 
         let {length, start, where} = event.data;
 
@@ -119,7 +120,8 @@ export class VBody extends Element
      */
     #appendRows(index, length)
     {
-        console.debug(`appendRows(${index}, ${length})`);
+        if (this.#debug)
+            console.debug(`appendRows(${index}, ${length})`);
 
         if (index === undefined)
             index = 0;
@@ -150,7 +152,8 @@ export class VBody extends Element
      */
     #prependRows(index, length)
     {
-        console.debug(`prependRows(${index}, ${length})`);
+        if (this.#debug)
+            console.debug(`prependRows(${index}, ${length})`);
 
         if (index === undefined)
             index = this.#count - 1;
@@ -183,7 +186,8 @@ export class VBody extends Element
      */
     #replaceRows(index, length)
     {
-        console.debug(`replaceRows(${index}, ${length})`);
+        if (this.#debug)
+            console.debug(`replaceRows(${index}, ${length})`);
 
         let elements = [];
         let start = index;
@@ -212,7 +216,8 @@ export class VBody extends Element
      */
     ["on click at tr"](event, row)
     {
-        this.#debugInfo();
+        if (this.#debug)
+            this.#debugInfo();
 
         // get row index in table
         this.select(row.elementIndex);
@@ -228,10 +233,8 @@ export class VBody extends Element
      */
     onkeydown(event)
     {
-        //console.debug(event.code);
-
-        console.line();
-        this.#debugInfo();
+        if (this.#debug)
+            this.#debugInfo();
 
         switch (event.code) {
             case "KeyUP":
@@ -244,10 +247,13 @@ export class VBody extends Element
                 const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
                 if (this.#selected > 0 && this.#selected === firstVisibleIndex) {
-                    console.debug("navigate to", firstVisibleIndex -1);
+                    if (this.#debug)
+                        console.debug("navigate to", firstVisibleIndex -1);
+
                     this.vlist.navigate(firstVisibleIndex -1);
 
-                    this.#debugInfo();
+                    if (this.#debug)
+                        this.#debugInfo();
                 }
 
                 break;
@@ -262,10 +268,13 @@ export class VBody extends Element
                 if (this.#selected < this.#count -1 && this.#selected == this.vlist.lastVisibleItem.attributes.index) {
                     const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
-                    console.debug("navigate to", firstVisibleIndex + 1);
+                    if (this.#debug)
+                        console.debug("navigate to", firstVisibleIndex + 1);
+
                     this.vlist.navigate(firstVisibleIndex +1);
 
-                    this.#debugInfo();
+                    if (this.#debug)
+                        this.#debugInfo();
                 }
 
                 break;
@@ -274,8 +283,6 @@ export class VBody extends Element
                 // event not handled, propagate
                 return false;
         }
-
-        console.debug("selected", this.#selected);
 
         // event handled, no further propagation
         return true;
