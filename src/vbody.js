@@ -120,8 +120,7 @@ export class VBody extends Element
      */
     #appendRows(index, length)
     {
-        if (this.#debug)
-            console.debug(`appendRows(${index}, ${length})`);
+        const timer = new Date();
 
         if (index === undefined)
             index = 0;
@@ -138,9 +137,12 @@ export class VBody extends Element
 
         this.append(elements);
 
+        if (this.#debug)
+            console.debug(`appendRows(${index}, ${length})`, `total time ${new Date() - timer}ms`);
+
         // return estimated number of items below
         return {
-            moreafter: this.#count - index
+            moreafter: this.#count - index,
         };
     }
 
@@ -152,8 +154,7 @@ export class VBody extends Element
      */
     #prependRows(index, length)
     {
-        if (this.#debug)
-            console.debug(`prependRows(${index}, ${length})`);
+        const timer = new Date();
 
         if (index === undefined)
             index = this.#count - 1;
@@ -172,9 +173,12 @@ export class VBody extends Element
 
         this.prepend(elements);
 
+        if (this.#debug)
+            console.debug(`prependRows(${index}, ${length})`, `total time ${new Date() - timer}ms`);
+
         // return estimated number of items above
         return {
-            morebefore: index < 0 ? 0 : index + 1
+            morebefore: index < 0 ? 0 : index + 1,
         };
     }
 
@@ -186,8 +190,7 @@ export class VBody extends Element
      */
     #replaceRows(index, length)
     {
-        if (this.#debug)
-            console.debug(`replaceRows(${index}, ${length})`);
+        const timer = new Date();
 
         let elements = [];
         let start = index;
@@ -201,10 +204,13 @@ export class VBody extends Element
 
         this.patch(elements);
 
+        if (this.#debug)
+            console.debug(`replaceRows(${index}, ${length})`, `total time ${new Date() - timer}ms`);
+
         // return estimated number of items before and above this chunk
         return {
             morebefore: start <= 0 ? 0 : start,
-            moreafter: this.#count - index
+            moreafter: this.#count - index,
         };
     }
 
