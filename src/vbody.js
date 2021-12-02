@@ -220,7 +220,7 @@ export class VBody extends Element
             this.#debugInfo();
 
         // get row index in table
-        this.select(row.elementIndex);
+        this.select(row.attributes.index);
 
         // event handled, no further propagation
         return true;
@@ -294,18 +294,15 @@ export class VBody extends Element
      */
     select(row)
     {
-        if (this.#count === 0)
-            return;
-
-        if (this.#selected !== undefined)
-            // unselect currently selected row
-            this.children[this.#selected - this.vlist.firstBufferIndex].state.current = false;
+        // unselect currently selected row
+        this.#setRowState(this.#selected, false);
 
         this.#selected = row;
 
         // select new row
-        this.children[this.#selected - this.vlist.firstBufferIndex].state.current = true;
+        this.#setRowState(this.#selected, true);
 
+        // dispatch event
         this.#sendEventSelected();
     }
 
@@ -316,6 +313,26 @@ export class VBody extends Element
     selected()
     {
         return this.#selected;
+    }
+
+    /**
+     * Set row state
+     * @param int row
+     * @param bool state true selected, false otherwise
+     * @return void
+     */
+    #setRowState(row, state)
+    {
+        if (this.#debug)
+            console.debug("set row state", row, state);
+
+        if (row === undefined || row < 0 || this.#count === 0 || row > this.#count)
+            return;
+
+        const index = row - this.vlist.firstBufferIndex;
+
+        if (index >= 0 && index < this.vlist.lastBufferIndex)
+            this.children[this.#selected - this.vlist.firstBufferIndex].state.current = state;
     }
 
     /**
