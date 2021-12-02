@@ -332,7 +332,7 @@ export class VBody extends Element
         const index = row - this.vlist.firstBufferIndex;
 
         if (index >= 0 && index < this.vlist.lastBufferIndex)
-            this.children[this.#selected - this.vlist.firstBufferIndex].state.current = state;
+            this.children[index].state.current = state;
     }
 
     /**
