@@ -9,7 +9,7 @@ export class VBody extends Element
     #selected;
 
     /**
-     * On attached to DOM tree
+     * On component attached to DOM tree
      * @return void
      */
     componentDidMount()
@@ -19,7 +19,7 @@ export class VBody extends Element
 
     /**
      * Update component
-     * @param object data
+     * @param array data
      * @return void
      */
     componentUpdate(data)
@@ -28,15 +28,18 @@ export class VBody extends Element
             return;
 
         if (data.data) {
-            this.#data  = data.data;
-            this.#count = this.#data.length;
+            // update data
+            this.#data     = data.data;
+            this.#count    = this.#data.length;
+
+            // reset selected and columns
             this.#selected = undefined;
+            this.#columns  = null;
         }
 
         if (data.columns)
+            // update columns
             this.#columns = data.columns;
-        else
-            this.#columns = null;
 
         this.update();
     }
