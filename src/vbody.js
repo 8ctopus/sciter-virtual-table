@@ -9,12 +9,38 @@ export class VBody extends Element
     #selected;
 
     /**
-     * On component attached to DOM tree
+     * On component attached to DOM tree event
      * @return void
      */
     componentDidMount()
     {
         this.#debug = this.hasAttribute("debug");
+    }
+
+    /**
+     * On content required event
+     * @param Event
+     * @return bool
+     */
+    oncontentrequired(event)
+    {
+        if (this.#debug)
+            console.debug("on content required");
+
+        let {length, start, where} = event.data;
+
+        if (where > 0)
+            // scrolling down, need to append more elements
+            event.data = this.#appendRows(start, length);
+        else
+        if (where < 0)
+            // scrolling up, need to prepend more elements
+            event.data = this.#prependRows(start, length);
+        else
+            // scrolling to index
+            event.data = this.#replaceRows(start, length);
+
+        return true;
     }
 
     /**
@@ -47,6 +73,7 @@ export class VBody extends Element
     /**
      * Repaint component
      * @return void
+     * @note not ideal but only way I found so far
      */
     update()
     {
@@ -54,32 +81,6 @@ export class VBody extends Element
             this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
         else
             this.#appendRows(0, 100);
-    }
-
-    /**
-     * Content required
-     * @param Event
-     * @return bool
-     */
-    oncontentrequired(event)
-    {
-        if (this.#debug)
-            console.debug("on content required");
-
-        let {length, start, where} = event.data;
-
-        if (where > 0)
-            // scrolling down, need to append more elements
-            event.data = this.#appendRows(start, length);
-        else
-        if (where < 0)
-            // scrolling up, need to prepend more elements
-            event.data = this.#prependRows(start, length);
-        else
-            // scrolling to index
-            event.data = this.#replaceRows(start, length);
-
-        return true;
     }
 
     /**
@@ -218,7 +219,7 @@ export class VBody extends Element
     }
 
     /**
-     * On row click
+     * On row click event
      * @param Event event
      * @param Element row
      * @return bool true if no further event propagation
@@ -236,7 +237,7 @@ export class VBody extends Element
     }
 
     /**
-     * On key down
+     * On key down event
      * @param Event
      * @return bool true if no further event propagation
      */
@@ -250,7 +251,7 @@ export class VBody extends Element
                 if (this.#selected > 0)
                     this.select(--this.#selected);
 
-                this.#sendEventSelected();
+                this.#postSelectedEvent();
 
                 // scroll window if needed
                 const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
@@ -271,7 +272,7 @@ export class VBody extends Element
                 if (this.#selected < this.#count -1)
                     this.select(++this.#selected);
 
-                this.#sendEventSelected();
+                this.#postSelectedEvent();
 
                 // scroll window if needed
                 if (this.#selected < this.#count -1 && this.#selected == this.vlist.lastVisibleItem.attributes.index) {
@@ -315,7 +316,7 @@ export class VBody extends Element
         this.#setRowState(this.#selected, true);
 
         // dispatch event
-        this.#sendEventSelected();
+        this.#postSelectedEvent();
     }
 
     /**
@@ -328,7 +329,7 @@ export class VBody extends Element
     }
 
     /**
-     * Get selected row
+     * Get selected row index
      * @return int
      */
     selected()
@@ -354,7 +355,7 @@ export class VBody extends Element
     }
 
     /**
-     * Debug list
+     * Debug info
      * @return void
      */
     #debugInfo()
@@ -364,10 +365,10 @@ export class VBody extends Element
     }
 
     /**
-     * Send row selected event
+     * Post row selected event
      * @return void
      */
-    #sendEventSelected()
+    #postSelectedEvent()
     {
         // send selected event
         this.postEvent(new CustomEvent("selected", {
