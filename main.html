@@ -94,17 +94,18 @@ document.ready = function() {
     // bring window to front and set input focus
     Window.this.activate(true);
 
-    data = createTableData(250);
-
     const table = document.$("tbody");
 
     // send data to table
+    data = createTableData(250);
+
     table.componentUpdate({
         data: data,
         // columns to show
         columns: [0,1,2,3],
     });
 
+    // select first row
     table.select(0);
 }
 
@@ -224,9 +225,23 @@ document.on("click", "button", function(event, element) {
             vbody.select(0);
             break;
 
+        case "10k rows":
+            data = createTableData(10000);
+
+            vbody.componentUpdate({
+                data: data,
+                // columns to show
+                columns: [0,1,2,3],
+            });
+
+            break;
+
         case "update data":
             // update data
-            data[0][1] = "Updated name";
+            data[0][0] = "Updated!";
+            data[1][1] = "Updated!";
+            data[2][2] = "Updated!";
+            data[3][3] = "Updated!";
 
             console.debug("data updated");
 
@@ -269,6 +284,7 @@ document.on("selected", "table > tbody", function(event, body) {
     <div>
         <button>Rows count</button>
         <button>Select row</button>
+        <button>10K rows</button>
         <button>Update data</button>
         <button>Empty data</button>
     </div>
