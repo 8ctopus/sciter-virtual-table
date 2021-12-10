@@ -55,8 +55,8 @@ export class VBody extends Element
 
         if (data.data) {
             // update data
-            this.#data     = data.data;
-            this.#count    = this.#data.length;
+            this.#data = data.data;
+            this.#count = this.#data.length;
 
             // reset selected and columns
             this.#selected = undefined;
