@@ -50,27 +50,33 @@ export class VBody extends Element
      */
     update(data)
     {
-        if (data === undefined)
-            return;
+        if (data) {
+            if (data.data) {
+                // update data
+                this.#data = data.data;
+                this.#count = this.#data.length;
 
-        if (data.data) {
-            // update data
-            this.#data = data.data;
-            this.#count = this.#data.length;
+                // reset selected and columns
+                this.#selected = undefined;
+                this.#columns  = null;
+            }
 
-            // reset selected and columns
-            this.#selected = undefined;
-            this.#columns  = null;
+            if (data.columns)
+                // update columns
+                this.#columns = data.columns;
         }
 
-        if (data.columns)
-            // update columns
-            this.#columns = data.columns;
+        // force refresh
+        this.vlist.navigate("itemnext");
+        this.vlist.navigate("itemprior");
 
+/*
+        // force refresh
         if (this.vlist.firstBufferIndex !== undefined)
             this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
         else
             this.#appendRows(0, 100);
+*/
     }
 
     /**
