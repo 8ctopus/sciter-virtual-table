@@ -55,6 +55,10 @@ table > thead > tr > th:last-child {
 
 @import url(src/vbody.css);
 
+input {
+    width: 50dip;
+}
+
 </style>
 <script type="module">
 
@@ -225,8 +229,10 @@ document.on("click", "button", function(event, element) {
             vbody.select(0);
             break;
 
-        case "10k rows":
-            data = createTableData(10000);
+        case "generate rows":
+            let count = document.$("input#count");
+
+            data = createTableData(count);
 
             vbody.componentUpdate({
                 data: data,
@@ -284,7 +290,7 @@ document.on("selected", "table > tbody", function(event, body) {
     <div>
         <button>Rows count</button>
         <button>Select row</button>
-        <button>10K rows</button>
+        <input type="text" #count value=10000><button>Generate rows</button>
         <button>Update data</button>
         <button>Empty data</button>
     </div>
