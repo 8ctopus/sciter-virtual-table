@@ -103,7 +103,7 @@ document.ready = function() {
     // send data to table
     data = createTableData(250);
 
-    table.componentUpdate({
+    table.update({
         data: data,
         // columns to show
         columns: [0,1,2,3],
@@ -234,7 +234,7 @@ document.on("click", "button", function(event, element) {
 
             data = createTableData(count);
 
-            vbody.componentUpdate({
+            vbody.update({
                 data: data,
                 // columns to show
                 columns: [0,1,2,3],
@@ -257,7 +257,7 @@ document.on("click", "button", function(event, element) {
             break;
 
         case "empty data":
-            vbody.componentUpdate({
+            vbody.update({
                 data: [],
                 // columns to show
                 columns: [],

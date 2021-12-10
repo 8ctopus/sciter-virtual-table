@@ -48,7 +48,7 @@ export class VBody extends Element
      * @param array data
      * @return void
      */
-    componentUpdate(data)
+    update(data)
     {
         if (data === undefined)
             return;
@@ -67,16 +67,6 @@ export class VBody extends Element
             // update columns
             this.#columns = data.columns;
 
-        this.update();
-    }
-
-    /**
-     * Repaint component
-     * @return void
-     * @note not ideal but only way I found so far
-     */
-    update()
-    {
         if (this.vlist.firstBufferIndex !== undefined)
             this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
         else
