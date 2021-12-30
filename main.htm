@@ -106,7 +106,7 @@ document.on("ready", function() {
     table.update({
         data: data,
         // columns to show
-        columns: [0,1,2,3],
+        columns: [0, 1, 2, 3],
     });
 
     // select first row
@@ -115,22 +115,19 @@ document.on("ready", function() {
 
 /**
  * Unhandled exception handler
- * @param  Error|String e
- * @return void
+ * @param {Error|string} exception
  */
-function unhandledExceptionHandler(e)
-{
+function unhandledExceptionHandler(exception) {
     // log exception using exception if it exists, error otherwise
-    typeof console.exception === "function" ? console.exception(e) : console.error(e);
+    typeof console.exception === "function" ? console.exception(exception) : console.error(exception);
 }
 
 /**
  * Create table data
- * @param  int count
- * @return array
+ * @param {number} count
+ * @returns {Array}
  */
-function createTableData(count)
-{
+function createTableData(count) {
     const firstNames = [
         "Antony",
         "David",
@@ -171,17 +168,17 @@ function createTableData(count)
         27,
         29,
         30,
-        37
+        37,
     ];
 
-    let data = [];
+    const data = [];
 
-    for (let i = 0; i < count; ++i) {
+    for (let index = 0; index < count; ++index) {
         data.push([
-            firstNames[i % firstNames.length],
-            middleNames[i % middleNames.length],
-            lastNames[i % lastNames.length],
-            ages[i % ages.length],
+            firstNames[index % firstNames.length],
+            middleNames[index % middleNames.length],
+            lastNames[index % lastNames.length],
+            ages[index % ages.length],
         ]);
     }
 
@@ -189,14 +186,14 @@ function createTableData(count)
 }
 
 document.on("click", "button", function(event, element) {
-    let vbody = document.$("table > tbody");
+    const vbody = document.$("table > tbody");
 
     if (!vbody)
         throw new Error("vbody not found");
 
     let position;
 
-    switch (element.innerText.toLowerCase()) {
+    switch (element.textContent.toLowerCase()) {
         case "start":
             position = "start";
             break;
@@ -229,18 +226,19 @@ document.on("click", "button", function(event, element) {
             vbody.select(0);
             break;
 
-        case "generate rows":
-            let count = document.$("input#count");
+        case "generate rows": {
+            const count = document.$("input#count");
 
             data = createTableData(count);
 
             vbody.update({
                 data: data,
                 // columns to show
-                columns: [0,1,2,3],
+                columns: [0, 1, 2, 3],
             });
 
             break;
+        }
 
         case "update data":
             // update data

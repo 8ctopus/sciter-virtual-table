@@ -1,33 +1,29 @@
-export class VBody extends Element
-{
+export class VBody extends Element {
     #debug;
 
-    #data    = null;
-    #count   = 0;
-    #columns = null;
+    #data = undefined;
+    #count = 0;
+    #columns = undefined;
 
     #selected;
 
     /**
      * On component attached to DOM tree event
-     * @return void
      */
-    componentDidMount()
-    {
+    componentDidMount() {
         this.#debug = this.hasAttribute("debug");
     }
 
     /**
      * On content required event
-     * @param Event
-     * @return bool
+     * @param {Event} event
+     * @returns {boolean}
      */
-    oncontentrequired(event)
-    {
+    oncontentrequired(event) {
         if (this.#debug)
             console.debug("on content required");
 
-        let {length, start, where} = event.data;
+        const {length, start, where} = event.data;
 
         if (where > 0)
             // scrolling down, need to append more elements
@@ -45,11 +41,9 @@ export class VBody extends Element
 
     /**
      * Update component
-     * @param array data
-     * @return void
+     * @param {Array} data
      */
-    update(data)
-    {
+    update(data) {
         if (data) {
             if (data.data) {
                 // update data
@@ -58,7 +52,7 @@ export class VBody extends Element
 
                 // reset selected and columns
                 this.#selected = undefined;
-                this.#columns  = null;
+                this.#columns = undefined;
             }
 
             if (data.columns)
@@ -70,7 +64,7 @@ export class VBody extends Element
         this.vlist.navigate("itemnext");
         this.vlist.navigate("itemprior");
 
-/*
+        /*
         // force refresh
         if (this.vlist.firstBufferIndex !== undefined)
             this.#replaceRows(this.vlist.firstBufferIndex, this.vlist.lastBufferIndex - this.vlist.firstBufferIndex + 1);
@@ -81,11 +75,11 @@ export class VBody extends Element
 
     /**
      * Render row
-     * @param int row index
+     * @param {number} index - row index
+     * @returns {JSX}
      */
-    #renderRow(index)
-    {
-        let cells = [];
+    #renderRow(index) {
+        const cells = [];
 
         if (this.#debug)
             cells.push(<td>{index}</td>);
@@ -93,14 +87,14 @@ export class VBody extends Element
         // add row cells
         if (this.#columns) {
             // show selected columns
-            this.#columns.forEach(row => {
+            for (const row of this.#columns)
                 cells.push(<td>{ this.#data[index][row] }</td>);
-            });
         }
-        else
+        else {
             // show all columns
-            for (let i = 0; i < this.#data[0].length; ++i)
+            for (let index_ = 0; index_ < this.#data[0].length; ++index_)
                 cells.push(<td>{ this.#data[index][0] }</td>);
+        }
 
         // create row
         const row = (
@@ -114,21 +108,20 @@ export class VBody extends Element
 
     /**
      * Append rows (scroll down)
-     * @param int index
-     * @param int length
-     * @return object
+     * @param {number} index
+     * @param {number} length
+     * @returns {object}
      */
-    #appendRows(index, length)
-    {
+    #appendRows(index, length) {
         const timer = new Date();
 
         if (index === undefined)
             index = 0;
 
         // create rows
-        let elements = [];
+        const elements = [];
 
-        for (let i = 0; i < length; ++i, ++index) {
+        for (let index_ = 0; index_ < length; ++index_, ++index) {
             if (index >= this.#count)
                 break;
 
@@ -138,7 +131,7 @@ export class VBody extends Element
         this.append(elements);
 
         if (this.#debug)
-            console.debug(`appendRows(${index}, ${length})`, `total time ${new Date() - timer}ms`);
+            console.debug(`appendRows(${index}, ${length})`, `total time ${Date.now() - timer}ms`);
 
         // return estimated number of items below
         return {
@@ -148,21 +141,20 @@ export class VBody extends Element
 
     /**
      * Prepend rows (scroll up)
-     * @param int index
-     * @param int length
-     * @return object
+     * @param {number} index
+     * @param {number} length
+     * @returns {object}
      */
-    #prependRows(index, length)
-    {
+    #prependRows(index, length) {
         const timer = new Date();
 
         if (index === undefined)
             index = this.#count - 1;
 
         // create rows
-        let elements = [];
+        const elements = [];
 
-        for (let i = 0; i < length; ++i, --index) {
+        for (let index_ = 0; index_ < length; ++index_, --index) {
             if (index < 0)
                 break;
 
@@ -174,7 +166,7 @@ export class VBody extends Element
         this.prepend(elements);
 
         if (this.#debug)
-            console.debug(`prependRows(${index}, ${length})`, `total time ${new Date() - timer}ms`);
+            console.debug(`prependRows(${index}, ${length})`, `total time ${Date.now() - timer}ms`);
 
         // return estimated number of items above
         return {
@@ -184,18 +176,17 @@ export class VBody extends Element
 
     /**
      * Replace rows (scroll to index)
-     * @param int index
-     * @param int length
-     * @return object
+     * @param {number} index
+     * @param {number} length
+     * @returns {object}
      */
-    #replaceRows(index, length)
-    {
+    #replaceRows(index, length) {
         const timer = new Date();
 
-        let elements = [];
-        let start = index;
+        const elements = [];
+        const start = index;
 
-        for (let i = 0; i < length; ++i, ++index) {
+        for (let index_ = 0; index_ < length; ++index_, ++index) {
             if (index >= this.#count)
                 break;
 
@@ -205,7 +196,7 @@ export class VBody extends Element
         this.patch(elements);
 
         if (this.#debug)
-            console.debug(`replaceRows(${index}, ${length})`, `total time ${new Date() - timer}ms`);
+            console.debug(`replaceRows(${index}, ${length})`, `total time ${Date.now() - timer}ms`);
 
         // return estimated number of items before and above this chunk
         return {
@@ -216,12 +207,11 @@ export class VBody extends Element
 
     /**
      * On row click event
-     * @param Event event
-     * @param Element row
-     * @return bool true if no further event propagation
+     * @param {Event} event
+     * @param {Element} row
+     * @returns {boolean} true if no further event propagation
      */
-    ["on click at tr"](event, row)
-    {
+    ["on click at tr"](event, row) {
         if (this.#debug)
             this.#debugInfo();
 
@@ -234,16 +224,15 @@ export class VBody extends Element
 
     /**
      * On key down event
-     * @param Event
-     * @return bool true if no further event propagation
+     * @param {Event} event
+     * @returns {boolean} true if no further event propagation
      */
-    onkeydown(event)
-    {
+    onkeydown(event) {
         if (this.#debug)
             this.#debugInfo();
 
         switch (event.code) {
-            case "KeyUP":
+            case "KeyUP": {
                 if (this.#selected > 0)
                     this.select(--this.#selected);
 
@@ -263,6 +252,7 @@ export class VBody extends Element
                 }
 
                 break;
+            }
 
             case "KeyDOWN":
                 if (this.#selected < this.#count -1)
@@ -296,10 +286,9 @@ export class VBody extends Element
 
     /**
      * Select row
-     * @param int row
+     * @param {number} row
      */
-    select(row)
-    {
+    select(row) {
         if (row === undefined || row < 0 || this.#count === 0 || row > this.#count)
             return;
 
@@ -317,30 +306,26 @@ export class VBody extends Element
 
     /**
      * Get rows count
-     * @return int
+     * @returns {number}
      */
-    count()
-    {
+    count() {
         return this.#count;
     }
 
     /**
      * Get selected row index
-     * @return int
+     * @returns {number}
      */
-    selected()
-    {
+    selected() {
         return this.#selected;
     }
 
     /**
      * Set row state
-     * @param int row
-     * @param bool state true selected, false otherwise
-     * @return void
+     * @param {number} row
+     * @param {boolean} state - true selected, false otherwise
      */
-    #setRowState(row, state)
-    {
+    #setRowState(row, state) {
         if (this.#debug)
             console.debug("set row state", row, state);
 
@@ -352,26 +337,22 @@ export class VBody extends Element
 
     /**
      * Debug info
-     * @return void
      */
-    #debugInfo()
-    {
+    #debugInfo() {
         console.debug(`buffered [${this.vlist.firstBufferIndex}-${this.vlist.lastBufferIndex}]`);
         console.debug(`visible  [${this.vlist.firstVisibleItem.attributes.index}-${this.vlist.lastVisibleItem.attributes.index}]`);
     }
 
     /**
      * Post row selected event
-     * @return void
      */
-    #postSelectedEvent()
-    {
+    #postSelectedEvent() {
         // send selected event
         this.postEvent(new CustomEvent("selected", {
             bubbles: true,
             detail: {
                 selected: this.#selected,
-            }
+            },
         }));
     }
 }
