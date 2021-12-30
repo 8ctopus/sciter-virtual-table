@@ -76,7 +76,7 @@ logger.capture(unhandledExceptionHandler);
 
 let data;
 
-document.ready = function() {
+document.on("ready", function() {
     // subscribe to logger messages
     logger.plaintext(document.$("plaintext#logger"));
 
@@ -111,7 +111,7 @@ document.ready = function() {
 
     // select first row
     table.select(0);
-}
+});
 
 /**
  * Unhandled exception handler
