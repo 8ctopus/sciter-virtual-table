@@ -7,7 +7,7 @@
 <title>sciter virtual table demo</title>
 <style>
 
-@import url(vendor/8ctopus/sciter-logger/src/logger.css);
+@import url(node_modules/sciter-logger/src/logger.css);
 
 body {
     border-spacing: 1em;
@@ -62,38 +62,35 @@ input {
 </style>
 <script type="module">
 
-import {logger} from "vendor/8ctopus/sciter-logger/src/logger.js";
-import * as utils from "vendor/8ctopus/sciter-utils/src/utils.js";
-
-// initialize logger
-logger.init();
-
-// attach logger to console
-logger.attach();
+import Logger from "node_modules/sciter-logger/src/logger.js";
+import * as Utils from "node_modules/sciter-utils/src/utils.js";
 
 // capture unhandled exceptions
-logger.capture(unhandledExceptionHandler);
+Logger.capture();
+
+// initialize logger
+Logger.init();
+
+// attach logger to console
+Logger.attach();
 
 let data;
 
 document.on("ready", function() {
-    // subscribe to logger messages
-    logger.plaintext(document.$("plaintext#logger"));
+    // redirect logger output to plaintext
+    Logger.plaintext(document.$("plaintext#logger"));
 
     // log sciter version
-    console.debug(utils.sciterInfo());
+    console.debug(Utils.sciterInfo());
 
     // add support for F5 reload
-    utils.addReloadWindow();
+    Utils.addReloadWindow();
 
     // close window on escape key press
-    utils.closeWindowOnEscape(Window.this);
+    Utils.closeWindowOnEscape(Window.this);
 
     // center window on screen
-    utils.centerWindow(Window.this, "screen");
-
-    // bring window to front
-    //utils.windowToFront(Window.this);
+    Utils.centerWindow(Window.this, "screen");
 
     // bring window to front and set input focus
     Window.this.activate(true);
@@ -112,15 +109,6 @@ document.on("ready", function() {
     // select first row
     table.select(0);
 });
-
-/**
- * Unhandled exception handler
- * @param {Error|string} exception
- */
-function unhandledExceptionHandler(exception) {
-    // log exception using exception if it exists, error otherwise
-    typeof console.exception === "function" ? console.exception(exception) : console.error(exception);
-}
 
 /**
  * Create table data
