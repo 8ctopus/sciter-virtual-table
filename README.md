@@ -23,7 +23,7 @@ This project is derivated from the [virtual table example](https://github.com/c-
 
 ### using npm
 
-- install package `npm install sciter-logger`
+- install package `npm install sciter-virtual-table` (not yet)
 
 ### copy source
 
