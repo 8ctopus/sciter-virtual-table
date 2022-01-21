@@ -243,9 +243,9 @@ export class VBody extends Element {
 
                 if (this.#selected > 0 && this.#selected === firstVisibleIndex) {
                     if (this.#debug)
-                        console.debug("navigate to", firstVisibleIndex -1);
+                        console.debug("navigate to", firstVisibleIndex - 1);
 
-                    this.vlist.navigate(firstVisibleIndex -1);
+                    this.vlist.navigate(firstVisibleIndex - 1);
 
                     if (this.#debug)
                         this.#debugInfo();
@@ -255,19 +255,19 @@ export class VBody extends Element {
             }
 
             case "KeyDOWN":
-                if (this.#selected < this.#count -1)
+                if (this.#selected < this.#count - 1)
                     this.select(++this.#selected);
 
                 this.#postSelectedEvent();
 
                 // scroll window if needed
-                if (this.#selected < this.#count -1 && this.#selected == this.vlist.lastVisibleItem.attributes.index) {
+                if (this.#selected < this.#count - 1 && this.#selected == this.vlist.lastVisibleItem.attributes.index) {
                     const firstVisibleIndex = Number(this.vlist.firstVisibleItem.attributes.index);
 
                     if (this.#debug)
                         console.debug("navigate to", firstVisibleIndex + 1);
 
-                    this.vlist.navigate(firstVisibleIndex +1);
+                    this.vlist.navigate(firstVisibleIndex + 1);
 
                     if (this.#debug)
                         this.#debugInfo();

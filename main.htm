@@ -101,7 +101,7 @@ document.on("ready", function() {
     data = createTableData(250);
 
     table.update({
-        data: data,
+        data,
         // columns to show
         columns: [0, 1, 2, 3],
     });
@@ -220,7 +220,7 @@ document.on("click", "button", function(event, element) {
             data = createTableData(count);
 
             vbody.update({
-                data: data,
+                data,
                 // columns to show
                 columns: [0, 1, 2, 3],
             });
