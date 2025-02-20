@@ -7,7 +7,7 @@ Exploring [sciter.js](https://sciter.com/) virtual lists.
 
 This project is derivated from the [virtual table example](https://github.com/c-smile/sciter-js-sdk/blob/main/samples.sciter/virtual-list/test-table.htm).
 
-![sciter virtual table screenshot](screenshot.png)
+![sciter virtual table screenshot](https://github.com/8ctopus/sciter-virtual-table/raw/master/screenshot.png)
 
 ## demo
 
