@@ -34,7 +34,7 @@ You can either add it to your project using npm or by copying the src directory.
 
 - add the `src` dir to your project
 
-### add to `<script type="module">`
+### add to html
 
 ```html
 <style src="src/vbody.css" />
