@@ -1,5 +1,8 @@
 # sciter virtual table
 
+![latest version](https://img.shields.io/npm/v/sciter-virtual-table.svg)
+![downloads](https://img.shields.io/npm/dy/sciter-virtual-table.svg)
+
 Exploring [sciter.js](https://sciter.com/) virtual lists.
 
 This project is derivated from the [virtual table example](https://github.com/c-smile/sciter-js-sdk/blob/main/samples.sciter/virtual-list/test-table.htm).
