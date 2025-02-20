@@ -21,13 +21,17 @@ This project is derivated from the [virtual table example](https://github.com/c-
 
 ## add to your project
 
+You can either add it to your project using npm or by copying the src directory.
+
 ### using npm
 
-- install package `npm install sciter-virtual-table` (not yet)
+- install package `npm install sciter-virtual-table`
 
 ### copy source
 
 - add the `src` dir to your project
+
+### add to `<script type="module">`
 
 ```html
 <style src="src/vbody.css" />
@@ -46,7 +50,7 @@ This project is derivated from the [virtual table example](https://github.com/c-
 
 ## how it actually works
 
-Virtual lists are virtual because only part of the data is added to the html DOM. By doing so the table is much more responsive. In the screenshot below, the yellow and blue rows 6 to 22 are added to the DOM, the blue rows are visible in the interface and the gray rows at both ends are neither added to the DOM, nor visible.
+Virtual lists are virtual because only part of the data is added to the html DOM. By doing so, the table is much more responsive. In the screenshot below, the yellow and blue rows 6 to 22 are added to the DOM, the blue rows are visible in the interface and the gray rows at both ends are neither added to the DOM, nor visible.
 
 ![virtual-list screenshot](https://github.com/8ctopus/sciter-virtual-table/raw/master/virtual-list.png)
 
