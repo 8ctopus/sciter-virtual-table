@@ -1,6 +1,6 @@
 {
   "name": "sciter-virtual-table",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "Exploring [sciter.js](https://sciter.com/) virtual lists.",
   "scripts": {
     "install-sdk": "node ./node_modules/sciter-sandbox/scripts/install.mjs cleanup",
